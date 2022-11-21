@@ -18,7 +18,6 @@ final class ProfileViewController: UIViewController {
         setSettings()
         setValue()
     }
-
 }
 
 // MARK: - Private Methods
