@@ -14,11 +14,11 @@ final class ProfileViewController: UIViewController {
     private var profile = Profile.getProfile()
 
     // MARK: - App Life Cicle
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewWillLayoutSubviews() {
         setSettings()
         setValue()
     }
+
 }
 
 // MARK: - Private Methods
