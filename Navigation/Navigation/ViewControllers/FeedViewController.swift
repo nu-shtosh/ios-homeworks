@@ -7,11 +7,9 @@
 
 import UIKit
 
-protocol PostViewControllerDelegate {
-    func goToPost()
-}
-
 final class FeedViewController: UIViewController {
+
+    private var post = Post(title: "Post title")
 
     lazy var goToPostButton: UIButton = {
         var buttonConfiguration = UIButton.Configuration.filled()
@@ -50,9 +48,13 @@ extension FeedViewController {
     }
 }
 
-extension FeedViewController: PostViewControllerDelegate {
-    func goToPost() {
-//        guard let postVC = UIViewController as! PostViewController else { return }
-//        present(PostViewController.self, animated: true)
+// MARK: - Private Methods
+extension FeedViewController {
+    private func goToPost() {
+        let postVC = PostViewController()
+        postVC.postTitle = post.title
+        postVC.hidesBottomBarWhenPushed = true
+        navigationController?.show(postVC, sender: nil)
+
     }
 }
