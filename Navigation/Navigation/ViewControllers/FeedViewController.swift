@@ -9,8 +9,10 @@ import UIKit
 
 final class FeedViewController: UIViewController {
 
-    private var post = Post(title: "Post title")
+    // MARK: - Properties
+    private var post = Post(title: "This is a post title")
 
+    // MARK: - IBElements
     lazy var goToPostButton: UIButton = {
         var buttonConfiguration = UIButton.Configuration.filled()
         buttonConfiguration.title = "Go To Post"
@@ -23,9 +25,11 @@ final class FeedViewController: UIViewController {
         return button
     }()
 
+    // MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .orange
+        setupNavigationBar()
         setSubviews(goToPostButton)
         setConstraints()
     }
@@ -33,6 +37,28 @@ final class FeedViewController: UIViewController {
 
 // MARK: - Setup Settings
 extension FeedViewController {
+    private func setupNavigationBar() {
+        title = "Feed"
+
+        let navBarAppearance = UINavigationBarAppearance()
+        navBarAppearance.backgroundColor = .darkGray
+
+        navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+
+        navigationController?.navigationBar.standardAppearance = navBarAppearance
+        navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
+
+        navigationItem.rightBarButtonItems = [
+            UIBarButtonItem(
+                title: "Info",
+                style: .done,
+                target: self,
+                action: #selector(goToInfo)
+            )]
+
+        navigationController?.navigationBar.tintColor = .white
+    }
+
     private func setSubviews(_ subviews: UIView...) {
         subviews.forEach { subview in
             view.addSubview(subview)
@@ -55,6 +81,10 @@ extension FeedViewController {
         postVC.postTitle = post.title
         postVC.hidesBottomBarWhenPushed = true
         navigationController?.show(postVC, sender: nil)
+    }
 
+    @objc private func goToInfo() {
+        let infoVC = InfoViewController()
+        navigationController?.show(infoVC, sender: nil)
     }
 }

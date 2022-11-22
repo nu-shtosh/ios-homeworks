@@ -18,7 +18,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.rootViewController = makeTabBarController()
     }
 
-    // MARK: - App life Cicle
+    // MARK: - App life Cycle
     func sceneDidDisconnect(_ scene: UIScene) {}
 
     func sceneDidBecomeActive(_ scene: UIScene) {}
@@ -34,7 +34,6 @@ extension SceneDelegate {
     private func makeTabBarController() -> UITabBarController {
         let feedVC = FeedViewController()
         let profileVC = ProfileViewController()
-        let _ = PostViewController()
 
         let feedNavBarVC = UINavigationController(rootViewController: feedVC)
         let profileNavBarVC = UINavigationController(rootViewController: profileVC)
@@ -59,11 +58,9 @@ extension SceneDelegate {
             if viewController is ProfileViewController {
                 viewController.tabBarItem.image = UIImage(systemName: "person.circle")
                 viewController.tabBarItem.title = "Profile"
-                viewController.navigationItem.title = "Profile"
             } else if viewController is FeedViewController {
-                viewController.tabBarItem.image = UIImage(systemName: "person.circle")
+                viewController.tabBarItem.image = UIImage(systemName: "list.bullet.circle")
                 viewController.tabBarItem.title = "Feed"
-                viewController.navigationItem.title = "Feed"
             }
         }
     }
