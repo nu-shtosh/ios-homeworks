@@ -40,7 +40,7 @@ extension InfoViewController {
 
     private func setConstraints() {
         NSLayoutConstraint.activate([
-            showAlertButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -150),
+            showAlertButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -80),
             showAlertButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             showAlertButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
         ])

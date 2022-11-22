@@ -85,6 +85,7 @@ extension FeedViewController {
 
     @objc private func goToInfo() {
         let infoVC = InfoViewController()
+        infoVC.hidesBottomBarWhenPushed = true
         navigationController?.show(infoVC, sender: nil)
     }
 }
