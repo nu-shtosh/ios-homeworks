@@ -15,6 +15,8 @@ final class FeedViewController: UIViewController {
     // MARK: - IBElements
     lazy var goToPostButton: UIButton = {
         var buttonConfiguration = UIButton.Configuration.filled()
+        buttonConfiguration.baseBackgroundColor = .gray
+
         buttonConfiguration.title = "Go To Post"
         let button = UIButton(
             configuration: buttonConfiguration,
@@ -28,18 +30,30 @@ final class FeedViewController: UIViewController {
     // MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .orange
-        setupNavigationBar()
+        view.backgroundColor = .lightGray
         setSubviews(goToPostButton)
+        setupNavigationBar()
         setConstraints()
     }
+
+    // ВОПРОС: нужно ли прятать навбар? выглядит не очень эстетично)
+    /*
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: false)
+    }
+    */
 }
 
 // MARK: - Setup Settings
 extension FeedViewController {
     private func setupNavigationBar() {
         title = "Feed"
-
         let navBarAppearance = UINavigationBarAppearance()
         navBarAppearance.backgroundColor = .darkGray
 
@@ -47,14 +61,6 @@ extension FeedViewController {
 
         navigationController?.navigationBar.standardAppearance = navBarAppearance
         navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
-
-        navigationItem.rightBarButtonItems = [
-            UIBarButtonItem(
-                title: "Info",
-                style: .done,
-                target: self,
-                action: #selector(goToInfo)
-            )]
 
         navigationController?.navigationBar.tintColor = .white
     }
@@ -80,12 +86,7 @@ extension FeedViewController {
         let postVC = PostViewController()
         postVC.postTitle = post.title
         postVC.hidesBottomBarWhenPushed = true
-        navigationController?.show(postVC, sender: nil)
-    }
 
-    @objc private func goToInfo() {
-        let infoVC = InfoViewController()
-        infoVC.hidesBottomBarWhenPushed = true
-        navigationController?.show(infoVC, sender: nil)
+        navigationController?.pushViewController(postVC, animated: true)
     }
 }

@@ -11,6 +11,7 @@ class InfoViewController: UIViewController {
 
     lazy var showAlertButton: UIButton = {
         var buttonConfiguration = UIButton.Configuration.filled()
+        buttonConfiguration.baseBackgroundColor = .gray
         buttonConfiguration.title = "Show Alert"
         let button = UIButton(
             configuration: buttonConfiguration,
@@ -21,13 +22,27 @@ class InfoViewController: UIViewController {
         return button
     }()
 
+    lazy var cancelButton: UIButton = {
+        var buttonConfiguration = UIButton.Configuration.filled()
+        buttonConfiguration.baseBackgroundColor = .systemRed
+        buttonConfiguration.title = "Cancel"
+        let button = UIButton(
+            configuration: buttonConfiguration,
+            primaryAction: UIAction { [unowned self] _ in
+                dismiss(animated: true)
+        })
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+
     // MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .red
-        setSubviews(showAlertButton)
+        view.backgroundColor = .lightGray
+        setSubviews(showAlertButton, cancelButton)
         setConstraints()
     }
+
 }
 
 // MARK: - Setup Settings
@@ -40,9 +55,12 @@ extension InfoViewController {
 
     private func setConstraints() {
         NSLayoutConstraint.activate([
-            showAlertButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -80),
+            showAlertButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -120),
             showAlertButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            showAlertButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
+            showAlertButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            cancelButton.topAnchor.constraint(equalTo: showAlertButton.bottomAnchor, constant: 20),
+            cancelButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            cancelButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
         ])
     }
 }
