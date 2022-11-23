@@ -61,7 +61,7 @@ extension FeedViewController {
 
         navigationController?.navigationBar.standardAppearance = navBarAppearance
         navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
-
+        
         navigationController?.navigationBar.tintColor = .white
     }
 
