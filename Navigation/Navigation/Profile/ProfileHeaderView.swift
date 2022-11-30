@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class ProfileHeaderView: UIView {
+final class ProfileHeaderView: UIView, UITextFieldDelegate {
     
     private var statusText: String?
 
@@ -125,18 +125,23 @@ final class ProfileHeaderView: UIView {
         }
         profileStatusLabel.text = status
         profileStatusTextField.text = .none
+        profileStatusTextField.resignFirstResponder()
     }
 
     @objc private func profileStatusTextChanged(_ textField: UITextField) {
         statusText = textField.text
+        profileStatusTextField.becomeFirstResponder()
     }
 }
 
 
 extension ProfileHeaderView {
     private func setKeyboardSettings(forUITextField textfield: UITextField) {
+        textfield.delegate = self
         textfield.keyboardAppearance = .dark
         textfield.autocorrectionType = .no
+        textfield.returnKeyType = .done
+        textfield.enablesReturnKeyAutomatically = true
         textfield.clearButtonMode = .always
 
         let tapOnView = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
@@ -144,8 +149,15 @@ extension ProfileHeaderView {
         addGestureRecognizer(tapOnView)
     }
 
-
     @objc func dismissKeyboard() {
         endEditing(true)
+    }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        profileStatusLabel.text = textField.text
+        profileStatusTextField.text = .none
+        profileStatusTextField.resignFirstResponder()
+        return true
     }
 }
