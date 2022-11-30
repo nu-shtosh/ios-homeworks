@@ -8,7 +8,8 @@
 import UIKit
 
 final class ProfileHeaderView: UIView, UITextFieldDelegate {
-    
+
+    // MARK: - Private Properties
     private var statusText: String?
 
     private lazy var profileImageView: UIImageView = {
@@ -74,6 +75,7 @@ final class ProfileHeaderView: UIView, UITextFieldDelegate {
         return statusTextField
     }()
 
+    // MARK: - UiView Life Cycle
     override func draw(_ rect: CGRect) {
         addSubviews(
             profileImageView,
@@ -84,6 +86,30 @@ final class ProfileHeaderView: UIView, UITextFieldDelegate {
         )
         setConstraints()
 
+    }
+
+    @objc private func profileStatusButtonTapped() {
+        guard let status = statusText, !status.isEmpty, status.count < 90 else {
+            // как вывести алерт во юивью?
+            return
+        }
+        profileStatusLabel.text = status
+        profileStatusTextField.text = .none
+        profileStatusTextField.resignFirstResponder()
+    }
+
+    @objc private func profileStatusTextChanged(_ textField: UITextField) {
+        statusText = textField.text
+        profileStatusTextField.becomeFirstResponder()
+    }
+}
+
+// MARK: - Setup Settings
+extension ProfileHeaderView {
+    private func addSubviews(_ subviews: UIView...) {
+        subviews.forEach { subview in
+            addSubview(subview)
+        }
     }
 
     private func setConstraints() {
@@ -111,29 +137,9 @@ final class ProfileHeaderView: UIView, UITextFieldDelegate {
             profileStatusTextField.leadingAnchor.constraint(equalTo: profileImageView.trailingAnchor, constant: 16),
         ])
     }
-
-    private func addSubviews(_ subviews: UIView...) {
-        subviews.forEach { subview in
-            addSubview(subview)
-        }
-    }
-
-    @objc private func profileStatusButtonTapped() {
-        guard let status = statusText, !status.isEmpty, status.count < 90 else {
-            // как вывести алерт во юивью?
-            return
-        }
-        profileStatusLabel.text = status
-        profileStatusTextField.text = .none
-        profileStatusTextField.resignFirstResponder()
-    }
-
-    @objc private func profileStatusTextChanged(_ textField: UITextField) {
-        statusText = textField.text
-        profileStatusTextField.becomeFirstResponder()
-    }
 }
 
+// MARK: - Keyboard
 extension ProfileHeaderView {
     private func setKeyboardSettings(forUITextField textfield: UITextField) {
         textfield.delegate = self

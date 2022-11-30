@@ -9,13 +9,15 @@ import UIKit
 
 final class ProfileViewController: UIViewController {
 
-    lazy var profileHeader: ProfileHeaderView = {
+    // MARK: - Private Properties
+    lazy private var profileHeader: ProfileHeaderView = {
         let profileHeader = ProfileHeaderView()
         profileHeader.frame = view.frame
         profileHeader.backgroundColor = .lightGray
         return profileHeader
     }()
 
+    // MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationBar()
@@ -27,6 +29,7 @@ final class ProfileViewController: UIViewController {
     }
 }
 
+// MARK: - Setup Settings
 extension ProfileViewController {
     private func addSubviews(_ subviews: UIView...) {
         subviews.forEach { subview in
@@ -45,5 +48,27 @@ extension ProfileViewController {
         navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
 
         navigationController?.navigationBar.tintColor = .white
+    }
+}
+
+// MARK: - Alert
+extension InfoViewController {
+    private func showAlert(withTitle title: String, andMessage message: String) {
+        let alert = UIAlertController(
+            title: title,
+            message: message,
+            preferredStyle: .alert
+        )
+
+        let okAction = UIAlertAction(title: "Ok", style: .default) { _ in
+            print("This is Ok Action")
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .destructive) { _ in
+            print("This is Cancel Action")
+        }
+
+        alert.addAction(okAction)
+        alert.addAction(cancelAction)
+        present(alert, animated: true)
     }
 }
