@@ -24,6 +24,10 @@ final class FeedViewController: UIViewController {
                 goToPost()
         })
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.layer.shadowOffset = CGSize(width: 2, height: 2)
+        button.layer.shadowRadius = 4
+        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowOpacity = 0.5
         return button
     }()
 
@@ -35,19 +39,6 @@ final class FeedViewController: UIViewController {
         setupNavigationBar()
         setConstraints()
     }
-
-    // ВОПРОС: нужно ли прятать навбар? выглядит не очень эстетично)
-    /*
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: false)
-    }
-
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: false)
-    }
-    */
 }
 
 // MARK: - Setup Settings
@@ -86,7 +77,6 @@ extension FeedViewController {
         let postVC = PostViewController()
         postVC.postTitle = post.title
         postVC.hidesBottomBarWhenPushed = true
-
         navigationController?.pushViewController(postVC, animated: true)
     }
 }

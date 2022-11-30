@@ -19,6 +19,10 @@ class InfoViewController: UIViewController {
                 showAlert(withTitle: "Hi!", andMessage: "This is Alert!")
         })
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.layer.shadowOffset = CGSize(width: 2, height: 2)
+        button.layer.shadowRadius = 4
+        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowOpacity = 0.5
         return button
     }()
 
@@ -32,6 +36,10 @@ class InfoViewController: UIViewController {
                 dismiss(animated: true)
         })
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.layer.shadowOffset = CGSize(width: 2, height: 2)
+        button.layer.shadowRadius = 4
+        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowOpacity = 0.5
         return button
     }()
 
