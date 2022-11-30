@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class ProfileHeaderView: UIView, UITextFieldDelegate {
+final class ProfileHeaderView: UIView {
 
     // MARK: - Private Properties
     private var statusText: String?
@@ -91,6 +91,7 @@ final class ProfileHeaderView: UIView, UITextFieldDelegate {
     @objc private func profileStatusButtonTapped() {
         guard let status = statusText, !status.isEmpty, status.count < 90 else {
             // как вывести алерт во юивью?
+            showAlert(withTitle: "Oops!", andMessage:  "In status you can use only 90 symbols!")
             return
         }
         profileStatusLabel.text = status
@@ -140,7 +141,7 @@ extension ProfileHeaderView {
 }
 
 // MARK: - Keyboard
-extension ProfileHeaderView {
+extension ProfileHeaderView: UITextFieldDelegate {
     private func setKeyboardSettings(forUITextField textfield: UITextField) {
         textfield.delegate = self
         textfield.keyboardAppearance = .dark
@@ -161,5 +162,27 @@ extension ProfileHeaderView {
         textField.text = .none
         textField.resignFirstResponder()
         return true
+    }
+}
+
+// MARK: - Alert
+extension ProfileHeaderView {
+    private func showAlert(withTitle title: String, andMessage message: String) {
+        let alert = UIAlertController(
+            title: title,
+            message: message,
+            preferredStyle: .alert
+        )
+
+        let okAction = UIAlertAction(title: "Ok", style: .default) { _ in
+            print("This is Ok Action")
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .destructive) { _ in
+            print("This is Cancel Action")
+        }
+
+        alert.addAction(okAction)
+        alert.addAction(cancelAction)
+        window?.rootViewController!.present(alert, animated: true)
     }
 }
