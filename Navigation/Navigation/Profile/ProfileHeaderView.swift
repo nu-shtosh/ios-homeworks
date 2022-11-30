@@ -134,7 +134,6 @@ final class ProfileHeaderView: UIView, UITextFieldDelegate {
     }
 }
 
-
 extension ProfileHeaderView {
     private func setKeyboardSettings(forUITextField textfield: UITextField) {
         textfield.delegate = self
@@ -143,9 +142,7 @@ extension ProfileHeaderView {
         textfield.returnKeyType = .done
         textfield.enablesReturnKeyAutomatically = true
         textfield.clearButtonMode = .always
-
         let tapOnView = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-
         addGestureRecognizer(tapOnView)
     }
 
@@ -154,10 +151,9 @@ extension ProfileHeaderView {
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
         profileStatusLabel.text = textField.text
-        profileStatusTextField.text = .none
-        profileStatusTextField.resignFirstResponder()
+        textField.text = .none
+        textField.resignFirstResponder()
         return true
     }
 }
