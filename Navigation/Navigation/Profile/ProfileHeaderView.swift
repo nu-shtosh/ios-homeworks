@@ -90,7 +90,6 @@ final class ProfileHeaderView: UIView {
 
     @objc private func profileStatusButtonTapped() {
         guard let status = statusText, !status.isEmpty, status.count < 90 else {
-            // как вывести алерт во юивью?
             showAlert(withTitle: "Oops!", andMessage:  "In status you can use only 90 symbols!")
             return
         }
@@ -158,6 +157,10 @@ extension ProfileHeaderView: UITextFieldDelegate {
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        guard let status = statusText, !status.isEmpty, status.count < 90 else {
+            showAlert(withTitle: "Oops!", andMessage:  "In status you can use only 90 symbols!")
+            return false
+        }
         profileStatusLabel.text = textField.text
         textField.text = .none
         textField.resignFirstResponder()
@@ -168,6 +171,7 @@ extension ProfileHeaderView: UITextFieldDelegate {
 // MARK: - Alert
 extension ProfileHeaderView {
     private func showAlert(withTitle title: String, andMessage message: String) {
+        guard let rootVC = window?.rootViewController else { return }
         let alert = UIAlertController(
             title: title,
             message: message,
@@ -177,12 +181,8 @@ extension ProfileHeaderView {
         let okAction = UIAlertAction(title: "Ok", style: .default) { _ in
             print("This is Ok Action")
         }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .destructive) { _ in
-            print("This is Cancel Action")
-        }
 
         alert.addAction(okAction)
-        alert.addAction(cancelAction)
-        window?.rootViewController!.present(alert, animated: true)
+        rootVC.present(alert, animated: true)
     }
 }
