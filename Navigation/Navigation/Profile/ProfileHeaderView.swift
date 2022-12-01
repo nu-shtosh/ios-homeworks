@@ -63,7 +63,7 @@ final class ProfileHeaderView: UIView {
         statusTextField.translatesAutoresizingMaskIntoConstraints = false
         statusTextField.font = .systemFont(ofSize: 15, weight: .regular)
         statusTextField.layer.masksToBounds = true
-        statusTextField.placeholder = "Input yor status"
+        statusTextField.placeholder = "Input your status"
         statusTextField.backgroundColor = .white
         statusTextField.layer.cornerRadius = 12
         statusTextField.layer.borderColor = UIColor.black.cgColor
@@ -89,17 +89,20 @@ final class ProfileHeaderView: UIView {
     }
 
     @objc private func profileStatusButtonTapped() {
-        guard let status = statusText, !status.isEmpty, status.count < 90 else {
-            showAlert(withTitle: "Oops!", andMessage:  "In status you can use only 90 symbols!")
-            return
-        }
-        profileStatusLabel.text = status
+        profileStatusLabel.text = statusText
         profileStatusTextField.text = .none
         profileStatusTextField.resignFirstResponder()
     }
 
     @objc private func profileStatusTextChanged(_ textField: UITextField) {
-        statusText = textField.text
+        guard let status = textField.text, status.count <= 90 else {
+            while textField.text?.count != 89 {
+                textField.text?.removeLast()
+            }
+            showAlert(withTitle: "Oops!", andMessage:  "You can input maximum 90 symbols!")
+            return
+        }
+        statusText = status
         profileStatusTextField.becomeFirstResponder()
     }
 }
@@ -157,10 +160,6 @@ extension ProfileHeaderView: UITextFieldDelegate {
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        guard let status = statusText, !status.isEmpty, status.count < 90 else {
-            showAlert(withTitle: "Oops!", andMessage:  "In status you can use only 90 symbols!")
-            return false
-        }
         profileStatusLabel.text = textField.text
         textField.text = .none
         textField.resignFirstResponder()
