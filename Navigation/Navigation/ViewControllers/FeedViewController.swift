@@ -9,6 +9,7 @@ import UIKit
 
 final class FeedViewController: UIViewController {
 
+    // MARK: - Properties
     lazy private var stackView: UIStackView = {
         var stackView = UIStackView()
         stackView.axis = .horizontal
@@ -19,15 +20,14 @@ final class FeedViewController: UIViewController {
         return stackView
     } ()
 
-    // MARK: - Properties
     private var post = Post(title: "This is a post title")
 
     // MARK: - IBElements
     lazy var goToPostButton: UIButton = {
         var buttonConfiguration = UIButton.Configuration.filled()
         buttonConfiguration.baseBackgroundColor = .systemBlue
-
         buttonConfiguration.title = "Go To Post"
+
         let button = UIButton(
             configuration: buttonConfiguration,
             primaryAction: UIAction { [unowned self] _ in
@@ -44,8 +44,8 @@ final class FeedViewController: UIViewController {
     lazy var goToPostButtonSecond: UIButton = {
         var buttonConfiguration = UIButton.Configuration.filled()
         buttonConfiguration.baseBackgroundColor = .systemCyan
-
         buttonConfiguration.title = "Go To Post"
+
         let button = UIButton(
             configuration: buttonConfiguration,
             primaryAction: UIAction { [unowned self] _ in
@@ -62,11 +62,12 @@ final class FeedViewController: UIViewController {
     // MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupNavigationBar()
         view.backgroundColor = .lightGray
         setSubviews(stackView)
-        setStackSubviews(goToPostButton, goToPostButtonSecond)
-        setupNavigationBar()
         setConstraints()
+        setStackSubviews(goToPostButton, goToPostButtonSecond)
+
     }
 }
 
