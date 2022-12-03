@@ -40,7 +40,7 @@ final class ProfileHeaderView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .systemFont(ofSize: 14, weight: .regular)
         label.text = "*args and **kwargs..."
-        label.numberOfLines = 0
+        label.numberOfLines = 3
         label.textColor = .gray
         return label
     }()
@@ -160,7 +160,7 @@ extension ProfileHeaderView {
             profileStatusTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             profileStatusTextField.leadingAnchor.constraint(equalTo: profileAvatarImageView.trailingAnchor, constant: 16),
 
-            profileChangeFullNameButton.topAnchor.constraint(equalTo: profileChangeStatusButton.bottomAnchor, constant: 16),
+            profileChangeFullNameButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -10),
             profileChangeFullNameButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             profileChangeFullNameButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16)
         ])
@@ -222,6 +222,7 @@ extension ProfileHeaderView {
             textField.clearButtonMode = .always
             textField.autocorrectionType = .no
         }
+
         let saveAction = UIAlertAction(title: "Save", style: .default) { [unowned self] _ in
             guard let newValue = alert.textFields!.first?.text else { return }
             fullNameText = newValue

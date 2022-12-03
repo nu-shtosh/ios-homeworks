@@ -50,7 +50,7 @@ extension ProfileViewController {
             profileHeader.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             profileHeader.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
             profileHeader.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
-            profileHeader.heightAnchor.constraint(equalToConstant: 300)
+            profileHeader.heightAnchor.constraint(equalToConstant: 250)
         ])
     }
 }
