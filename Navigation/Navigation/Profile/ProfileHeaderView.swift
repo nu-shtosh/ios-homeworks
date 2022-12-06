@@ -90,8 +90,8 @@ final class ProfileHeaderView: UIView {
         return textField
     }()
 
-    // MARK: - UiView Life Cycle
-    override func draw(_ rect: CGRect) {
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         addSubviews(
             profileAvatarImageView,
             profileFullNameLabel,
@@ -101,6 +101,10 @@ final class ProfileHeaderView: UIView {
             profileChangeFullNameButton
         )
         setConstraints()
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     @objc private func profileChangeStatusButtonTapped() {

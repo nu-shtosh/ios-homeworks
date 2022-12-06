@@ -22,15 +22,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 extension SceneDelegate {
     private func makeTabBarController() -> UITabBarController {
         let feedVC = FeedViewController()
-        let profileVC = ProfileViewController()
+        let logInVC = LogInViewController()
 
         let feedNavBarVC = UINavigationController(rootViewController: feedVC)
-        let profileNavBarVC = UINavigationController(rootViewController: profileVC)
+        let logInNavBarVC = UINavigationController(rootViewController: logInVC)
+        logInNavBarVC.navigationBar.isHidden = true
 
-        setSettings(forViewControllers: feedVC, profileVC)
+        setSettings(forViewControllers: feedVC, logInVC)
 
         let rootTabBarController = UITabBarController()
-        rootTabBarController.viewControllers = [feedNavBarVC, profileNavBarVC]
+        rootTabBarController.viewControllers = [feedNavBarVC, logInNavBarVC]
         
         setSettings(forTabBarController: rootTabBarController)
 
@@ -45,7 +46,7 @@ extension SceneDelegate {
 
     private func setSettings(forViewControllers viewControllers: UIViewController...) {
         viewControllers.forEach{ viewController in
-            if viewController is ProfileViewController {
+            if viewController is LogInViewController {
                 viewController.tabBarItem.image = UIImage(systemName: "person.circle")
                 viewController.tabBarItem.title = "Profile"
             } else if viewController is FeedViewController {
