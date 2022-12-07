@@ -11,7 +11,7 @@ class InfoViewController: UIViewController {
 
     lazy var showAlertButton: UIButton = {
         var buttonConfiguration = UIButton.Configuration.filled()
-        buttonConfiguration.baseBackgroundColor = .gray
+        buttonConfiguration.baseBackgroundColor = UIColor(named: "VKColor")
         buttonConfiguration.title = "Show Alert"
         let button = UIButton(
             configuration: buttonConfiguration,
@@ -46,7 +46,7 @@ class InfoViewController: UIViewController {
     // MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .lightGray
+        view.backgroundColor = .systemGray5
         view.addSubviewsIn(view, showAlertButton, cancelButton)
         setConstraints()
     }

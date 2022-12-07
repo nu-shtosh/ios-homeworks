@@ -63,7 +63,7 @@ final class FeedViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationBar()
-        view.backgroundColor = .lightGray
+        view.backgroundColor = .systemGray5
         view.addSubviewsIn(view, stackView)
         setStackSubviews(goToPostButton, goToPostButtonSecond)
         setConstraints()
@@ -75,11 +75,11 @@ extension FeedViewController {
     private func setupNavigationBar() {
         title = "Feed"
         let navBarAppearance = UINavigationBarAppearance()
-        navBarAppearance.backgroundColor = .darkGray
-        navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+        navBarAppearance.backgroundColor = .systemGray3
+        navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor(named: "VKColor") ?? UIColor.systemCyan]
         navigationController?.navigationBar.standardAppearance = navBarAppearance
         navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
-        navigationController?.navigationBar.tintColor = .white
+        navigationController?.navigationBar.tintColor = UIColor(named: "VKColor")
     }
 
     private func setStackSubviews(_ subviews: UIView...) {

@@ -12,7 +12,6 @@ final class ProfileViewController: UIViewController {
     // MARK: - Private Properties
     lazy var profileHeader: ProfileHeaderView = {
         let profileHeader = ProfileHeaderView()
-        profileHeader.backgroundColor = .lightGray
         profileHeader.translatesAutoresizingMaskIntoConstraints = false
         return profileHeader
     }()
@@ -23,7 +22,7 @@ final class ProfileViewController: UIViewController {
         setupNavigationBar()
         addSubviews(profileHeader)
         setConstraints()
-        view.backgroundColor = .lightGray
+        view.backgroundColor = .systemGray5
     }
 }
 
@@ -38,11 +37,12 @@ extension ProfileViewController {
     private func setupNavigationBar() {
         title = "Profile"
         let navBarAppearance = UINavigationBarAppearance()
-        navBarAppearance.backgroundColor = .darkGray
-        navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+        navBarAppearance.backgroundColor = .systemGray3
+        navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor(named: "VKColor") ?? UIColor.systemCyan]
+        navigationController?.navigationBar.isHidden = false
         navigationController?.navigationBar.standardAppearance = navBarAppearance
         navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
-        navigationController?.navigationBar.tintColor = .white
+        navigationController?.navigationBar.tintColor = UIColor(named: "VKColor")
     }
 
     private func setConstraints() {

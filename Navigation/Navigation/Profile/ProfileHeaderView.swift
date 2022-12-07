@@ -49,7 +49,7 @@ final class ProfileHeaderView: UIView {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Setup Status", for: .normal)
-        button.backgroundColor = .systemBlue
+        button.backgroundColor = UIColor(named: "VKColor")
         button.layer.cornerRadius = 4
         button.layer.shadowOffset = CGSize(width: 4, height: 4)
         button.layer.shadowRadius = 4
@@ -63,7 +63,7 @@ final class ProfileHeaderView: UIView {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Setup Full Name", for: .normal)
-        button.backgroundColor = .systemCyan
+        button.backgroundColor = UIColor(named: "VKColor")
         button.layer.cornerRadius = 4
         button.layer.shadowOffset = CGSize(width: 4, height: 4)
         button.layer.shadowRadius = 4

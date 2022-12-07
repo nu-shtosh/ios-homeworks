@@ -14,10 +14,10 @@ final class LogInViewController: UIViewController {
 
     lazy private var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
-        scrollView.backgroundColor = .lightGray
+        scrollView.backgroundColor = .systemGray5
         scrollView.addSubview(contentView)
         scrollView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.showsVerticalScrollIndicator = true
+        scrollView.showsVerticalScrollIndicator = false
         return scrollView
     }()
 
@@ -37,12 +37,20 @@ final class LogInViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        setupNavigationBar()
         addObservers()
     }
 
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         removeObservers()
+    }
+
+    private func setupNavigationBar() {
+        let navBarAppearance = UINavigationBarAppearance()
+        navigationController?.navigationBar.isHidden = true
+        navigationController?.navigationBar.standardAppearance = navBarAppearance
+        navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
     }
 
     private func addObservers() {
