@@ -47,7 +47,7 @@ class InfoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .lightGray
-        setSubviews(showAlertButton, cancelButton)
+        view.addSubviewsIn(view, showAlertButton, cancelButton)
         setConstraints()
     }
 
@@ -55,11 +55,6 @@ class InfoViewController: UIViewController {
 
 // MARK: - Setup Settings
 extension InfoViewController {
-    private func setSubviews(_ subviews: UIView...) {
-        subviews.forEach { subview in
-            view.addSubview(subview)
-        }
-    }
 
     private func setConstraints() {
         NSLayoutConstraint.activate([

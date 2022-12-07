@@ -7,7 +7,10 @@
 
 import UIKit
 
+
 final class LogInViewController: UIViewController {
+
+    let user = User.getUser()
 
     lazy private var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -24,15 +27,24 @@ final class LogInViewController: UIViewController {
         logInView.logInButton.addTarget(self, action: #selector(logInButtonDidTapped), for: .touchUpInside)
         return logInView
     }()
-    
+
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        addObservers()
         view.addSubview(scrollView)
         setConstraint()
     }
 
-    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        addObservers()
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        removeObservers()
+    }
+
     private func addObservers() {
         NotificationCenter.default.addObserver(
             self,
@@ -48,6 +60,11 @@ final class LogInViewController: UIViewController {
         )
     }
 
+    private func removeObservers() {
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+
     @objc func keyboardDidShow(notification: Notification) {
         guard let userInfo = notification.userInfo else { return }
         let keyboardFrameSize = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
@@ -57,11 +74,20 @@ final class LogInViewController: UIViewController {
 
     @objc func keyboardDidHide(notification: Notification) {
         scrollView.contentSize = CGSize(width: view.bounds.size.width, height: view.bounds.size.height)
+        scrollView.scrollIndicatorInsets = .zero
     }
 
     @objc func logInButtonDidTapped() {
         let profileVC = ProfileViewController()
-        navigationController?.pushViewController(profileVC, animated: true)
+        guard let logInValue = contentView.emailOrPhoneTextField.text else { return }
+        guard let password = contentView.passwordTextField.text else { return }
+        if user.password == password &&
+            (user.email == logInValue || user.phone == logInValue) {
+            profileVC.profileHeader.profileStatusLabel.text = user.status
+            profileVC.profileHeader.profileFullNameLabel.text = user.fullName
+            profileVC.profileHeader.profileAvatarImageView.image = UIImage(named: user.image)
+            navigationController?.pushViewController(profileVC, animated: true)
+        }
     }
 
 
@@ -74,8 +100,8 @@ final class LogInViewController: UIViewController {
 
             contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
             contentView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
             contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
         ])
     }

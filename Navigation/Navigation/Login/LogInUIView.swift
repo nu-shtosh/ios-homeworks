@@ -16,7 +16,7 @@ final class LogInUIView: UIView {
         return imageView
     }()
 
-    lazy private var emailOrPhoneTextField: UITextField = {
+    lazy var emailOrPhoneTextField: UITextField = {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.font = .systemFont(ofSize: 16, weight: .regular)
@@ -33,7 +33,7 @@ final class LogInUIView: UIView {
         return textField
     }()
 
-    lazy private var passwordTextField: UITextField = {
+    lazy var passwordTextField: UITextField = {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.font = .systemFont(ofSize: 16, weight: .regular)
@@ -77,12 +77,6 @@ final class LogInUIView: UIView {
 }
 
 extension LogInUIView {
-    private func addSubviews(_ subviews: UIView...) {
-        subviews.forEach { subview in
-            addSubview(subview)
-        }
-    }
-
     private func setConstraints() {
         NSLayoutConstraint.activate([
             logoImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 100),

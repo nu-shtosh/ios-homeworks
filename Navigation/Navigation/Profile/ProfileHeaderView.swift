@@ -13,7 +13,7 @@ final class ProfileHeaderView: UIView {
     private var statusText: String?
     private var fullNameText: String?
 
-    private lazy var profileAvatarImageView: UIImageView = {
+    lazy var profileAvatarImageView: UIImageView = {
         let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 132, height: 132))
         imageView.layer.masksToBounds = true
         imageView.layer.cornerRadius = imageView.frame.width / 2
@@ -26,20 +26,20 @@ final class ProfileHeaderView: UIView {
         return imageView
     }()
 
-    private lazy var profileFullNameLabel: UILabel = {
+    lazy var profileFullNameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .systemFont(ofSize: 18, weight: .bold)
-        label.text = "Foo Bar"
+        label.text = "user"
         label.textColor = .black
         return label
     }()
 
-    private lazy var profileStatusLabel: UILabel = {
+    lazy var profileStatusLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = .systemFont(ofSize: 14, weight: .regular)
-        label.text = "*args and **kwargs..."
+        label.text = "status"
         label.numberOfLines = 3
         label.textColor = .gray
         return label
@@ -134,11 +134,6 @@ final class ProfileHeaderView: UIView {
 
 // MARK: - Setup Settings
 extension ProfileHeaderView {
-    private func addSubviews(_ subviews: UIView...) {
-        subviews.forEach { subview in
-            addSubview(subview)
-        }
-    }
 
     private func setConstraints() {
         NSLayoutConstraint.activate([

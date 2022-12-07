@@ -10,7 +10,7 @@ import UIKit
 final class ProfileViewController: UIViewController {
 
     // MARK: - Private Properties
-    lazy private var profileHeader: ProfileHeaderView = {
+    lazy var profileHeader: ProfileHeaderView = {
         let profileHeader = ProfileHeaderView()
         profileHeader.backgroundColor = .lightGray
         profileHeader.translatesAutoresizingMaskIntoConstraints = false
