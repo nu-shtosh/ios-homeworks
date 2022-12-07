@@ -95,6 +95,9 @@ final class LogInViewController: UIViewController {
             profileVC.profileHeader.profileFullNameLabel.text = user.fullName
             profileVC.profileHeader.profileAvatarImageView.image = UIImage(named: user.image)
             navigationController?.pushViewController(profileVC, animated: true)
+        } else {
+            navigationController?.pushViewController(profileVC, animated: true) //для дз
+            // потом здес будет шоуалерт
         }
     }
 
