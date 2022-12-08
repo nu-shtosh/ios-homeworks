@@ -77,17 +77,27 @@ final class LogInUIView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    override func layoutSubviews() {
+        addSubviews(
+            logoImageView,
+            emailOrPhoneTextField,
+            passwordTextField,
+            logInButton
+        )
+        setConstraints()
+    }
 }
 
 extension LogInUIView {
     private func setConstraints() {
         NSLayoutConstraint.activate([
-            logoImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 100),
+            logoImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 80),
             logoImageView.widthAnchor.constraint(equalToConstant: 100),
             logoImageView.heightAnchor.constraint(equalToConstant: 100),
             logoImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
 
-            emailOrPhoneTextField.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 100),
+            emailOrPhoneTextField.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 80),
             emailOrPhoneTextField.heightAnchor.constraint(equalToConstant: 50),
             emailOrPhoneTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             emailOrPhoneTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
@@ -97,7 +107,7 @@ extension LogInUIView {
             passwordTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             passwordTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
 
-            logInButton.topAnchor.constraint(equalTo: passwordTextField.topAnchor, constant: 70),
+            logInButton.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 50),
             logInButton.heightAnchor.constraint(equalToConstant: 50),
             logInButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             logInButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),

@@ -24,6 +24,11 @@ final class LogInViewController: UIViewController {
     lazy private var contentView: LogInUIView = {
         let contentView = LogInUIView()
         contentView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.logInButton.addTarget(
+            self,
+            action: #selector(logInButtonDidTapped),
+            for: .touchUpInside
+        )
         return contentView
     }()
 
@@ -32,6 +37,10 @@ final class LogInViewController: UIViewController {
         super.viewDidLoad()
         view.addSubview(scrollView)
         setConstraint()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        scrollView.contentSize = CGSize(width: .zero, height: UIScreen.main.bounds.height+300)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -59,7 +68,6 @@ final class LogInViewController: UIViewController {
             name: UIResponder.keyboardDidShowNotification,
             object: nil
         )
-
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(keyboardDidHide),
@@ -85,7 +93,7 @@ final class LogInViewController: UIViewController {
         guard let userInfo = notification.userInfo else { return }
         let keyboardFrameSize = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
         scrollView.setContentOffset(CGPoint(x: 0, y: 150), animated: true)
-        scrollView.contentSize = CGSize(width: view.bounds.size.width, height: view.bounds.size.height + keyboardFrameSize.height)
+        scrollView.contentSize = CGSize(width: .zero, height: view.bounds.size.height + keyboardFrameSize.height)
     }
 
     @objc func keyboardDidHide(notification: Notification) {
@@ -104,7 +112,6 @@ final class LogInViewController: UIViewController {
             profileVC.profileHeader.profileAvatarImageView.image = UIImage(named: user.image)
             navigationController?.pushViewController(profileVC, animated: true)
         } else {
-            print("x")
             navigationController?.pushViewController(profileVC, animated: true)
             //для дз
             // TODO: потом здес будет шоуалерт
@@ -118,6 +125,7 @@ final class LogInViewController: UIViewController {
             scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             scrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+
 
             contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
             contentView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
