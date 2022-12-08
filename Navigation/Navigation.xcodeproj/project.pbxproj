@@ -21,6 +21,8 @@
 		B8B37AC9293FE84E00611844 /* LogInUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B37AC8293FE84E00611844 /* LogInUIView.swift */; };
 		B8B37ACB2940838500611844 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B37ACA2940838500611844 /* Profile.swift */; };
 		B8B37ACE2940851200611844 /* Extension + UIVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B37ACD2940851200611844 /* Extension + UIVIew.swift */; };
+		B8B37AF52941E08400611844 /* Extension + UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B37AF42941E08400611844 /* Extension + UIButton.swift */; };
+		B8B37AF72941E18000611844 /* Extension + UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B37AF62941E18000611844 /* Extension + UIColor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +42,8 @@
 		B8B37AC8293FE84E00611844 /* LogInUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInUIView.swift; sourceTree = "<group>"; };
 		B8B37ACA2940838500611844 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		B8B37ACD2940851200611844 /* Extension + UIVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension + UIVIew.swift"; sourceTree = "<group>"; };
+		B8B37AF42941E08400611844 /* Extension + UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension + UIButton.swift"; sourceTree = "<group>"; };
+		B8B37AF62941E18000611844 /* Extension + UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension + UIColor.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,6 +147,8 @@
 			isa = PBXGroup;
 			children = (
 				B8B37ACD2940851200611844 /* Extension + UIVIew.swift */,
+				B8B37AF42941E08400611844 /* Extension + UIButton.swift */,
+				B8B37AF62941E18000611844 /* Extension + UIColor.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -220,11 +226,13 @@
 				B85E0C02292C2ACB00E4BFA2 /* FeedViewController.swift in Sources */,
 				B85E0BFE292C2ACB00E4BFA2 /* AppDelegate.swift in Sources */,
 				B8B37AC4293F91D700611844 /* LogInViewController.swift in Sources */,
+				B8B37AF72941E18000611844 /* Extension + UIColor.swift in Sources */,
 				B8B37ACE2940851200611844 /* Extension + UIVIew.swift in Sources */,
 				B85E0C16292C339300E4BFA2 /* ProfileViewController.swift in Sources */,
 				B85E0C21292CDC6500E4BFA2 /* InfoViewController.swift in Sources */,
 				B85E0C1F292C47BC00E4BFA2 /* Post.swift in Sources */,
 				B85E0C00292C2ACB00E4BFA2 /* SceneDelegate.swift in Sources */,
+				B8B37AF52941E08400611844 /* Extension + UIButton.swift in Sources */,
 				B85E0C18292C33A800E4BFA2 /* PostViewController.swift in Sources */,
 				B8B37ACB2940838500611844 /* Profile.swift in Sources */,
 				B8B37AC9293FE84E00611844 /* LogInUIView.swift in Sources */,

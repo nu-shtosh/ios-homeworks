@@ -20,7 +20,6 @@ final class FeedViewController: UIViewController {
         return stackView
     } ()
 
-    private var post = Post(title: "This is a post title")
 
     // MARK: - IBElements
     lazy var goToPostButton: UIButton = {
@@ -100,7 +99,7 @@ extension FeedViewController {
 extension FeedViewController {
     private func goToPost() {
         let postVC = PostViewController()
-        postVC.postTitle = post.title
+        postVC.postTitle = "Post"
         postVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(postVC, animated: true)
     }

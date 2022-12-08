@@ -21,7 +21,7 @@ struct User {
         name + " " + surname
     }
 
-    static func getUser() -> User {
+    static func getDefaultUser() -> User {
         User(
             name: "Foo",
             surname: "Bar",

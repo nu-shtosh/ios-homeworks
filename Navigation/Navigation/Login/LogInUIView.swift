@@ -8,6 +8,7 @@
 import UIKit
 
 final class LogInUIView: UIView {
+    private let VKColor = UIColor(named: "VKColor")
 
     lazy private var logoImageView: UIImageView = {
         let imageView = UIImageView()
@@ -52,13 +53,15 @@ final class LogInUIView: UIView {
     }()
 
     lazy var logInButton: UIButton = {
-        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 60))
+        var buttonConfiguration = UIButton.Configuration.outline()
+        buttonConfiguration.title = "Log In"
+        buttonConfiguration.background.backgroundColor = VKColor
+        buttonConfiguration.baseForegroundColor = VKColor
+        var button = OutlineButton(configuration: buttonConfiguration, primaryAction: nil)
+        button.isSelected = true
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Log In", for: .normal)
-        button.backgroundColor = UIColor(named: "VKColor")
-        button.layer.cornerRadius = 10
         return button
-    }()
+    } ()
 
     override init(frame: CGRect) {
         super.init(frame: frame)

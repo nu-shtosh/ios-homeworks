@@ -10,7 +10,7 @@ import UIKit
 
 final class LogInViewController: UIViewController {
 
-    let user = User.getUser()
+    let user = User.getDefaultUser()
 
     lazy private var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -22,10 +22,9 @@ final class LogInViewController: UIViewController {
     }()
 
     lazy private var contentView: LogInUIView = {
-        let logInView = LogInUIView()
-        logInView.translatesAutoresizingMaskIntoConstraints = false
-        logInView.logInButton.addTarget(self, action: #selector(logInButtonDidTapped), for: .touchUpInside)
-        return logInView
+        let contentView = LogInUIView()
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        return contentView
     }()
 
 
@@ -60,6 +59,7 @@ final class LogInViewController: UIViewController {
             name: UIResponder.keyboardDidShowNotification,
             object: nil
         )
+
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(keyboardDidHide),
@@ -69,20 +69,28 @@ final class LogInViewController: UIViewController {
     }
 
     private func removeObservers() {
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.removeObserver(
+            self,
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+        NotificationCenter.default.removeObserver(
+            self,
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
     }
 
     @objc func keyboardDidShow(notification: Notification) {
         guard let userInfo = notification.userInfo else { return }
         let keyboardFrameSize = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+        scrollView.setContentOffset(CGPoint(x: 0, y: 150), animated: true)
         scrollView.contentSize = CGSize(width: view.bounds.size.width, height: view.bounds.size.height + keyboardFrameSize.height)
-        scrollView.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardFrameSize.height, right: 0)
     }
 
     @objc func keyboardDidHide(notification: Notification) {
-        scrollView.contentSize = CGSize(width: view.bounds.size.width, height: view.bounds.size.height)
-        scrollView.scrollIndicatorInsets = .zero
+        scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
+
     }
 
     @objc func logInButtonDidTapped() {
@@ -96,8 +104,10 @@ final class LogInViewController: UIViewController {
             profileVC.profileHeader.profileAvatarImageView.image = UIImage(named: user.image)
             navigationController?.pushViewController(profileVC, animated: true)
         } else {
-            navigationController?.pushViewController(profileVC, animated: true) //для дз
-            // потом здес будет шоуалерт
+            print("x")
+            navigationController?.pushViewController(profileVC, animated: true)
+            //для дз
+            // TODO: потом здес будет шоуалерт
         }
     }
 
