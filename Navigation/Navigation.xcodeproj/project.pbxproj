@@ -18,7 +18,7 @@
 		B85E0C21292CDC6500E4BFA2 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E0C20292CDC6500E4BFA2 /* InfoViewController.swift */; };
 		B89EF38F2936618E005FA98E /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B89EF38E2936618E005FA98E /* ProfileHeaderView.swift */; };
 		B8B37AC4293F91D700611844 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B37AC3293F91D700611844 /* LogInViewController.swift */; };
-		B8B37AC9293FE84E00611844 /* LogInUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B37AC8293FE84E00611844 /* LogInUIView.swift */; };
+		B8B37AC9293FE84E00611844 /* LogInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B37AC8293FE84E00611844 /* LogInView.swift */; };
 		B8B37ACB2940838500611844 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B37ACA2940838500611844 /* Profile.swift */; };
 		B8B37ACE2940851200611844 /* Extension + UIVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B37ACD2940851200611844 /* Extension + UIVIew.swift */; };
 		B8B37AF52941E08400611844 /* Extension + UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8B37AF42941E08400611844 /* Extension + UIButton.swift */; };
@@ -39,7 +39,7 @@
 		B85E0C20292CDC6500E4BFA2 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		B89EF38E2936618E005FA98E /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
 		B8B37AC3293F91D700611844 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
-		B8B37AC8293FE84E00611844 /* LogInUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInUIView.swift; sourceTree = "<group>"; };
+		B8B37AC8293FE84E00611844 /* LogInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInView.swift; sourceTree = "<group>"; };
 		B8B37ACA2940838500611844 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		B8B37ACD2940851200611844 /* Extension + UIVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension + UIVIew.swift"; sourceTree = "<group>"; };
 		B8B37AF42941E08400611844 /* Extension + UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension + UIButton.swift"; sourceTree = "<group>"; };
@@ -137,7 +137,7 @@
 		B8B37AC5293F9BB000611844 /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				B8B37AC8293FE84E00611844 /* LogInUIView.swift */,
+				B8B37AC8293FE84E00611844 /* LogInView.swift */,
 				B8B37AC3293F91D700611844 /* LogInViewController.swift */,
 			);
 			path = Login;
@@ -235,7 +235,7 @@
 				B8B37AF52941E08400611844 /* Extension + UIButton.swift in Sources */,
 				B85E0C18292C33A800E4BFA2 /* PostViewController.swift in Sources */,
 				B8B37ACB2940838500611844 /* Profile.swift in Sources */,
-				B8B37AC9293FE84E00611844 /* LogInUIView.swift in Sources */,
+				B8B37AC9293FE84E00611844 /* LogInView.swift in Sources */,
 				B89EF38F2936618E005FA98E /* ProfileHeaderView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

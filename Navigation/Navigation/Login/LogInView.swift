@@ -7,10 +7,10 @@
 
 import UIKit
 
-final class LogInUIView: UIView {
+final class LogInView: UIView {
     private let VKColor = UIColor(named: "VKColor")
 
-    lazy private var logoImageView: UIImageView = {
+    lazy var logoImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "VKLogo")
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -78,26 +78,17 @@ final class LogInUIView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func layoutSubviews() {
-        addSubviews(
-            logoImageView,
-            emailOrPhoneTextField,
-            passwordTextField,
-            logInButton
-        )
-        setConstraints()
-    }
 }
 
-extension LogInUIView {
+extension LogInView {
     private func setConstraints() {
         NSLayoutConstraint.activate([
-            logoImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 80),
+            logoImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 120),
             logoImageView.widthAnchor.constraint(equalToConstant: 100),
             logoImageView.heightAnchor.constraint(equalToConstant: 100),
             logoImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
 
-            emailOrPhoneTextField.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 80),
+            emailOrPhoneTextField.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 120),
             emailOrPhoneTextField.heightAnchor.constraint(equalToConstant: 50),
             emailOrPhoneTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             emailOrPhoneTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
@@ -107,7 +98,7 @@ extension LogInUIView {
             passwordTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             passwordTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
 
-            logInButton.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 50),
+            logInButton.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 16),
             logInButton.heightAnchor.constraint(equalToConstant: 50),
             logInButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             logInButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
@@ -115,7 +106,7 @@ extension LogInUIView {
     }
 }
 
-extension LogInUIView: UITextFieldDelegate {
+extension LogInView: UITextFieldDelegate {
     private func setKeyboardSettings(forUITextField textField: UITextField) {
         textField.delegate = self
         textField.keyboardAppearance = .dark

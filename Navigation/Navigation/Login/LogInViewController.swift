@@ -16,14 +16,13 @@ final class LogInViewController: UIViewController {
         let scrollView = UIScrollView()
         scrollView.backgroundColor = .systemGray5
         scrollView.addSubview(contentView)
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.showsVerticalScrollIndicator = false
+        scrollView.contentSize = CGSize(width: .zero, height: UIScreen.main.bounds.height + 300)
         return scrollView
     }()
 
-    lazy private var contentView: LogInUIView = {
-        let contentView = LogInUIView()
-        contentView.translatesAutoresizingMaskIntoConstraints = false
+    lazy private var contentView: LogInView = {
+        let contentView = LogInView()
         contentView.logInButton.addTarget(
             self,
             action: #selector(logInButtonDidTapped),
@@ -32,26 +31,27 @@ final class LogInViewController: UIViewController {
         return contentView
     }()
 
-
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(scrollView)
-        setConstraint()
-    }
 
-    override func viewDidAppear(_ animated: Bool) {
-        scrollView.contentSize = CGSize(width: .zero, height: UIScreen.main.bounds.height+300)
+        setupScrollView()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupNavigationBar()
+        scrollView.contentSize = CGSize(width: .zero, height: UIScreen.main.bounds.height+300)
         addObservers()
     }
 
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         removeObservers()
+    }
+
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        scrollView.contentSize = CGSize(width: UIScreen.main.bounds.height+300, height: .zero)
     }
 
     private func setupNavigationBar() {
@@ -89,15 +89,18 @@ final class LogInViewController: UIViewController {
         )
     }
 
+
     @objc func keyboardDidShow(notification: Notification) {
         guard let userInfo = notification.userInfo else { return }
         let keyboardFrameSize = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
-        scrollView.setContentOffset(CGPoint(x: 0, y: 150), animated: true)
+
+//        scrollView.setContentOffset(CGPoint(x: 0, y: 50), animated: true)
         scrollView.contentSize = CGSize(width: .zero, height: view.bounds.size.height + keyboardFrameSize.height)
+
     }
 
     @objc func keyboardDidHide(notification: Notification) {
-        scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
+//        scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
 
     }
 
@@ -119,20 +122,21 @@ final class LogInViewController: UIViewController {
     }
 
 
-    private func setConstraint() {
-        NSLayoutConstraint.activate([
-            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            scrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+    func setupScrollView(){
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(scrollView)
+        scrollView.addSubview(contentView)
 
+        scrollView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
+        scrollView.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor).isActive = true
+        scrollView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
 
-            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
-            contentView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
-            contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
-            contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
-        ])
+        contentView.centerYAnchor.constraint(equalTo: scrollView.centerYAnchor).isActive = true
+        contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
+        contentView.heightAnchor.constraint(equalTo: scrollView.heightAnchor, constant: 200).isActive = true
+        contentView.topAnchor.constraint(equalTo: scrollView.topAnchor).isActive = true
+        contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true
     }
 }
-
