@@ -10,14 +10,41 @@ import UIKit
 final class FeedViewController: UIViewController {
 
     // MARK: - Properties
-    private var post = Post(title: "This is a post title")
+    lazy private var stackView: UIStackView = {
+        var stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.distribution = .equalSpacing
+        stackView.alignment = .fill
+        stackView.spacing = 10
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    } ()
+
 
     // MARK: - IBElements
     lazy var goToPostButton: UIButton = {
         var buttonConfiguration = UIButton.Configuration.filled()
-        buttonConfiguration.baseBackgroundColor = .gray
-
+        buttonConfiguration.baseBackgroundColor = .systemBlue
         buttonConfiguration.title = "Go To Post"
+
+        let button = UIButton(
+            configuration: buttonConfiguration,
+            primaryAction: UIAction { [unowned self] _ in
+                goToPost()
+        })
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.layer.shadowOffset = CGSize(width: 2, height: 2)
+        button.layer.shadowRadius = 4
+        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowOpacity = 0.5
+        return button
+    }()
+
+    lazy var goToPostButtonSecond: UIButton = {
+        var buttonConfiguration = UIButton.Configuration.filled()
+        buttonConfiguration.baseBackgroundColor = .systemCyan
+        buttonConfiguration.title = "Go To Post"
+
         let button = UIButton(
             configuration: buttonConfiguration,
             primaryAction: UIAction { [unowned self] _ in
@@ -34,9 +61,10 @@ final class FeedViewController: UIViewController {
     // MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .lightGray
-        setSubviews(goToPostButton)
         setupNavigationBar()
+        view.backgroundColor = .systemGray5
+        view.addSubviewsIn(view, stackView)
+        setStackSubviews(goToPostButton, goToPostButtonSecond)
         setConstraints()
     }
 }
@@ -46,27 +74,23 @@ extension FeedViewController {
     private func setupNavigationBar() {
         title = "Feed"
         let navBarAppearance = UINavigationBarAppearance()
-        navBarAppearance.backgroundColor = .darkGray
-
-        navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
-
+        navBarAppearance.backgroundColor = .systemGray3
+        navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor(named: "VKColor") ?? UIColor.systemCyan]
         navigationController?.navigationBar.standardAppearance = navBarAppearance
         navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
-        
-        navigationController?.navigationBar.tintColor = .white
+        navigationController?.navigationBar.tintColor = UIColor(named: "VKColor")
     }
 
-    private func setSubviews(_ subviews: UIView...) {
+    private func setStackSubviews(_ subviews: UIView...) {
         subviews.forEach { subview in
-            view.addSubview(subview)
+            stackView.addArrangedSubview(subview)
         }
     }
 
     private func setConstraints() {
         NSLayoutConstraint.activate([
-            goToPostButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -150),
-            goToPostButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            goToPostButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
+            stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
         ])
     }
 }
@@ -75,7 +99,7 @@ extension FeedViewController {
 extension FeedViewController {
     private func goToPost() {
         let postVC = PostViewController()
-        postVC.postTitle = post.title
+        postVC.postTitle = "Post"
         postVC.hidesBottomBarWhenPushed = true
         navigationController?.pushViewController(postVC, animated: true)
     }

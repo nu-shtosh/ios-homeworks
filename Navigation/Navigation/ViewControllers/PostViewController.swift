@@ -15,7 +15,7 @@ final class PostViewController: UIViewController {
     // MARK: - View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .lightGray
+        view.backgroundColor = .systemGray5
         title = postTitle
         setupNavigationBar()
     }
@@ -25,22 +25,18 @@ final class PostViewController: UIViewController {
 extension PostViewController {
     private func setupNavigationBar() {
         let navBarAppearance = UINavigationBarAppearance()
-        navBarAppearance.backgroundColor = .darkGray
-
-        navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
-
+        navBarAppearance.backgroundColor = .systemGray3
+        navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor(named: "VKColor") ?? UIColor.systemCyan]
         navigationController?.navigationBar.standardAppearance = navBarAppearance
         navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
-
         navigationItem.rightBarButtonItems = [
             UIBarButtonItem(
                 title: "Info",
-                style: .done,
+                style: .plain,
                 target: self,
                 action: #selector(goToInfo)
             )]
-
-        navigationController?.navigationBar.tintColor = .white
+        navigationController?.navigationBar.tintColor = UIColor(named: "VKColor")
     }
     
     @objc private func goToInfo() {

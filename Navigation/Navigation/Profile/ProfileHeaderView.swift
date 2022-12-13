@@ -11,87 +11,112 @@ final class ProfileHeaderView: UIView {
 
     // MARK: - Private Properties
     private var statusText: String?
+    private var fullNameText: String?
 
-    private lazy var profileImageView: UIImageView = {
-        let profileImage = UIImageView(frame: CGRect(x: 0, y: 0, width: 132, height: 132))
-        profileImage.layer.masksToBounds = true
-        profileImage.layer.cornerRadius = profileImage.frame.width / 2
-        profileImage.contentMode = .scaleAspectFit
-        profileImage.clipsToBounds = true
-        profileImage.layer.borderColor = UIColor.white.cgColor
-        profileImage.layer.borderWidth = 3
-        profileImage.translatesAutoresizingMaskIntoConstraints = false
-        profileImage.image = UIImage(systemName: "person.crop.circle.fill")
-        return profileImage
+    lazy var profileAvatarImageView: UIImageView = {
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 132, height: 132))
+        imageView.layer.masksToBounds = true
+        imageView.layer.cornerRadius = imageView.frame.width / 2
+        imageView.contentMode = .scaleAspectFit
+        imageView.clipsToBounds = true
+        imageView.layer.borderColor = UIColor.white.cgColor
+        imageView.layer.borderWidth = 3
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = UIImage(systemName: "person.crop.circle.fill")
+        return imageView
     }()
 
-    private lazy var profileTitleLabel: UILabel = {
-        let profileLabel = UILabel()
-        profileLabel.translatesAutoresizingMaskIntoConstraints = false
-        profileLabel.font = .systemFont(ofSize: 18, weight: .bold)
-        profileLabel.text = "Foo Bar"
-        profileLabel.textColor = .black
-        return profileLabel
+    lazy var profileFullNameLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = .systemFont(ofSize: 18, weight: .bold)
+        label.text = "user"
+        label.textColor = .black
+        return label
     }()
 
-    private lazy var profileStatusLabel: UILabel = {
-        let statusLabel = UILabel()
-        statusLabel.translatesAutoresizingMaskIntoConstraints = false
-        statusLabel.font = .systemFont(ofSize: 14, weight: .regular)
-        statusLabel.text = "*args and **kwargs..."
-        statusLabel.numberOfLines = 0
-        statusLabel.textColor = .gray
-        return statusLabel
+    lazy var profileStatusLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = .systemFont(ofSize: 14, weight: .regular)
+        label.text = "status"
+        label.numberOfLines = 3
+        label.textColor = .gray
+        return label
     }()
 
-    private lazy var profileStatusButton: UIButton = {
-        let statusButton = UIButton()
-        statusButton.translatesAutoresizingMaskIntoConstraints = false
-        statusButton.setTitle("Setup Status", for: .normal)
-        statusButton.backgroundColor = .systemBlue
-        statusButton.layer.cornerRadius = 4
-        statusButton.layer.shadowOffset = CGSize(width: 4, height: 4)
-        statusButton.layer.shadowRadius = 4
-        statusButton.layer.shadowColor = UIColor.black.cgColor
-        statusButton.layer.shadowOpacity = 0.7
-        statusButton.addTarget(self, action: #selector(profileStatusButtonTapped), for: .touchUpInside)
-        return statusButton
+    private lazy var profileChangeStatusButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("Setup Status", for: .normal)
+        button.backgroundColor = UIColor(named: "VKColor")
+        button.layer.cornerRadius = 4
+        button.layer.shadowOffset = CGSize(width: 4, height: 4)
+        button.layer.shadowRadius = 4
+        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowOpacity = 0.7
+        button.addTarget(self, action: #selector(profileChangeStatusButtonTapped), for: .touchUpInside)
+        return button
+    }()
+
+    private lazy var profileChangeFullNameButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("Setup Full Name", for: .normal)
+        button.backgroundColor = UIColor(named: "VKColor")
+        button.layer.cornerRadius = 4
+        button.layer.shadowOffset = CGSize(width: 4, height: 4)
+        button.layer.shadowRadius = 4
+        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowOpacity = 0.7
+        button.addTarget(self, action: #selector(profileChangeFullNameButtonTapped), for: .touchUpInside)
+        return button
     }()
 
     private lazy var profileStatusTextField: UITextField = {
-        let statusTextField = UITextField(frame: CGRect(x: 0, y: 0, width: 0, height: 40))
-        statusTextField.translatesAutoresizingMaskIntoConstraints = false
-        statusTextField.font = .systemFont(ofSize: 15, weight: .regular)
-        statusTextField.layer.masksToBounds = true
-        statusTextField.placeholder = "Input your status"
-        statusTextField.backgroundColor = .white
-        statusTextField.layer.cornerRadius = 12
-        statusTextField.layer.borderColor = UIColor.black.cgColor
-        statusTextField.layer.borderWidth = 1
-        statusTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: statusTextField.frame.height))
-        statusTextField.leftViewMode = .always
-        setKeyboardSettings(forUITextField: statusTextField)
-        statusTextField.addTarget(self, action: #selector(profileStatusTextChanged), for: .editingChanged)
-        return statusTextField
+        let textField = UITextField(frame: CGRect(x: 0, y: 0, width: 0, height: 40))
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.font = .systemFont(ofSize: 15, weight: .regular)
+        textField.layer.masksToBounds = true
+        textField.placeholder = "Input your status"
+        textField.backgroundColor = .white
+        textField.layer.cornerRadius = 12
+        textField.layer.borderColor = UIColor.black.cgColor
+        textField.layer.borderWidth = 1
+        textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: textField.frame.height))
+        textField.leftViewMode = .always
+        setKeyboardSettings(forUITextField: textField)
+        textField.addTarget(self, action: #selector(profileStatusTextChanged), for: .editingChanged)
+        return textField
     }()
 
-    // MARK: - UiView Life Cycle
-    override func draw(_ rect: CGRect) {
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         addSubviews(
-            profileImageView,
-            profileTitleLabel,
+            profileAvatarImageView,
+            profileFullNameLabel,
             profileStatusLabel,
-            profileStatusButton,
-            profileStatusTextField
+            profileChangeStatusButton,
+            profileStatusTextField,
+            profileChangeFullNameButton
         )
         setConstraints()
-
     }
 
-    @objc private func profileStatusButtonTapped() {
-        profileStatusLabel.text = statusText
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    @objc private func profileChangeStatusButtonTapped() {
+        print("New profile status \(statusText ?? "")")
+        profileStatusLabel.text = statusText ?? ""
         profileStatusTextField.text = .none
         profileStatusTextField.resignFirstResponder()
+    }
+
+    @objc private func profileChangeFullNameButtonTapped() {
+        print("New profile full name \(fullNameText ?? "")")
+        showChangeFullNameAlert(withTitle: "Change Full Name", andMessage: "What do you want to change?")
     }
 
     @objc private func profileStatusTextChanged(_ textField: UITextField) {
@@ -109,48 +134,47 @@ final class ProfileHeaderView: UIView {
 
 // MARK: - Setup Settings
 extension ProfileHeaderView {
-    private func addSubviews(_ subviews: UIView...) {
-        subviews.forEach { subview in
-            addSubview(subview)
-        }
-    }
 
     private func setConstraints() {
         NSLayoutConstraint.activate([
-            profileImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16),
-            profileImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            profileImageView.widthAnchor.constraint(equalToConstant: 132),
-            profileImageView.heightAnchor.constraint(equalToConstant: 132),
+            profileAvatarImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16),
+            profileAvatarImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            profileAvatarImageView.widthAnchor.constraint(equalToConstant: 132),
+            profileAvatarImageView.heightAnchor.constraint(equalToConstant: 132),
 
-            profileTitleLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 27),
-            profileTitleLabel.leadingAnchor.constraint(equalTo: profileImageView.trailingAnchor, constant: 16),
-            profileTitleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            profileFullNameLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 27),
+            profileFullNameLabel.leadingAnchor.constraint(equalTo: profileAvatarImageView.trailingAnchor, constant: 16),
+            profileFullNameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
 
-            profileStatusButton.topAnchor.constraint(equalTo: profileImageView.bottomAnchor, constant: 16),
-            profileStatusButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            profileStatusButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            profileChangeStatusButton.topAnchor.constraint(equalTo: profileAvatarImageView.bottomAnchor, constant: 16),
+            profileChangeStatusButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            profileChangeStatusButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
 
-            profileStatusLabel.bottomAnchor.constraint(equalTo: profileStatusButton.topAnchor, constant: -54),
-            profileStatusLabel.leadingAnchor.constraint(equalTo: profileImageView.trailingAnchor, constant: 16),
+            profileStatusLabel.bottomAnchor.constraint(equalTo: profileChangeStatusButton.topAnchor, constant: -54),
+            profileStatusLabel.leadingAnchor.constraint(equalTo: profileAvatarImageView.trailingAnchor, constant: 16),
             profileStatusLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
 
             profileStatusTextField.topAnchor.constraint(equalTo: profileStatusLabel.bottomAnchor, constant: 10),
-            profileStatusTextField.bottomAnchor.constraint(equalTo: profileStatusButton.topAnchor, constant: -10),
+            profileStatusTextField.bottomAnchor.constraint(equalTo: profileChangeStatusButton.topAnchor, constant: -10),
             profileStatusTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            profileStatusTextField.leadingAnchor.constraint(equalTo: profileImageView.trailingAnchor, constant: 16),
+            profileStatusTextField.leadingAnchor.constraint(equalTo: profileAvatarImageView.trailingAnchor, constant: 16),
+
+            profileChangeFullNameButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -10),
+            profileChangeFullNameButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            profileChangeFullNameButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16)
         ])
     }
 }
 
 // MARK: - Keyboard
 extension ProfileHeaderView: UITextFieldDelegate {
-    private func setKeyboardSettings(forUITextField textfield: UITextField) {
-        textfield.delegate = self
-        textfield.keyboardAppearance = .dark
-        textfield.autocorrectionType = .no
-        textfield.returnKeyType = .done
-        textfield.enablesReturnKeyAutomatically = true
-        textfield.clearButtonMode = .always
+    private func setKeyboardSettings(forUITextField textField: UITextField) {
+        textField.delegate = self
+        textField.keyboardAppearance = .dark
+        textField.autocorrectionType = .no
+        textField.returnKeyType = .done
+        textField.enablesReturnKeyAutomatically = true
+        textField.clearButtonMode = .always
         let tapOnView = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         addGestureRecognizer(tapOnView)
     }
@@ -160,9 +184,7 @@ extension ProfileHeaderView: UITextFieldDelegate {
     }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        profileStatusLabel.text = textField.text
-        textField.text = .none
-        textField.resignFirstResponder()
+        dismissKeyboard()
         return true
     }
 }
@@ -182,6 +204,33 @@ extension ProfileHeaderView {
         }
 
         alert.addAction(okAction)
+        rootVC.present(alert, animated: true)
+    }
+
+    private func showChangeFullNameAlert(withTitle title: String, andMessage message: String) {
+        guard let rootVC = window?.rootViewController else { return }
+        let alert = UIAlertController(
+            title: title,
+            message: message,
+            preferredStyle: .alert
+        )
+        alert.addTextField { [unowned self] textField in
+            textField.placeholder = "Full Name"
+            textField.text = profileFullNameLabel.text
+            textField.keyboardAppearance = .dark
+            textField.clearButtonMode = .always
+            textField.autocorrectionType = .no
+        }
+
+        let saveAction = UIAlertAction(title: "Save", style: .default) { [unowned self] _ in
+            guard let newValue = alert.textFields!.first?.text else { return }
+            fullNameText = newValue
+            profileFullNameLabel.text = fullNameText
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .destructive)
+
+        alert.addAction(saveAction)
+        alert.addAction(cancelAction)
         rootVC.present(alert, animated: true)
     }
 }
