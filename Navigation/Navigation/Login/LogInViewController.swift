@@ -94,13 +94,13 @@ final class LogInViewController: UIViewController {
         guard let userInfo = notification.userInfo else { return }
         let keyboardFrameSize = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
 
-//        scrollView.setContentOffset(CGPoint(x: 0, y: 50), animated: true)
+        scrollView.setContentOffset(CGPoint(x: 0, y: 50), animated: true)
         scrollView.contentSize = CGSize(width: .zero, height: view.bounds.size.height + keyboardFrameSize.height)
 
     }
 
     @objc func keyboardDidHide(notification: Notification) {
-//        scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
+        scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
 
     }
 
@@ -110,9 +110,9 @@ final class LogInViewController: UIViewController {
         guard let password = contentView.passwordTextField.text else { return }
         if user.password == password &&
             (user.email == logInValue || user.phone == logInValue) {
-            profileVC.profileHeader.profileStatusLabel.text = user.status
-            profileVC.profileHeader.profileFullNameLabel.text = user.fullName
-            profileVC.profileHeader.profileAvatarImageView.image = UIImage(named: user.image)
+//            profileVC.profileHeader.profileStatusLabel.text = user.status
+//            profileVC.profileHeader.profileFullNameLabel.text = user.fullName
+//            profileVC.profileHeader.profileAvatarImageView.image = UIImage(named: user.image)
             navigationController?.pushViewController(profileVC, animated: true)
         } else {
             navigationController?.pushViewController(profileVC, animated: true)
