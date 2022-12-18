@@ -106,13 +106,11 @@ final class LogInViewController: UIViewController {
 
     @objc func logInButtonDidTapped() {
         let profileVC = ProfileViewController()
+        let profileHeader = ProfileHeaderView()
         guard let logInValue = contentView.emailOrPhoneTextField.text else { return }
         guard let password = contentView.passwordTextField.text else { return }
         if user.password == password &&
             (user.email == logInValue || user.phone == logInValue) {
-//            profileVC.profileHeader.profileStatusLabel.text = user.status
-//            profileVC.profileHeader.profileFullNameLabel.text = user.fullName
-//            profileVC.profileHeader.profileAvatarImageView.image = UIImage(named: user.image)
             navigationController?.pushViewController(profileVC, animated: true)
         } else {
             navigationController?.pushViewController(profileVC, animated: true)

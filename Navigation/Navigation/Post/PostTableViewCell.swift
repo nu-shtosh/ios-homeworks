@@ -45,6 +45,7 @@ class PostTableViewCell: UITableViewCell {
         let likes = UILabel()
         likes.textColor = .black
         likes.font = UIFont.systemFont(ofSize: 16)
+        likes.text = ""
         likes.numberOfLines = 0
         likes.translatesAutoresizingMaskIntoConstraints = false
         return likes
@@ -53,6 +54,7 @@ class PostTableViewCell: UITableViewCell {
     lazy var views: UILabel = {
         let views = UILabel()
         views.textColor = .black
+        views.text = ""
         views.font = UIFont.systemFont(ofSize: 16)
         views.numberOfLines = 0
         views.translatesAutoresizingMaskIntoConstraints = false
@@ -64,6 +66,14 @@ class PostTableViewCell: UITableViewCell {
         addSubviews(postAuthor, postImageView, descriptionText, likes, views)
         setConstraints()
     }
+
+    func setupCell(with post: Post) {
+        postAuthor.text = post.author.fullName
+        postImageView.image = UIImage(named: post.image)
+        descriptionText.text = post.description
+        likes.text = "Views: \(post.views)"
+        views.text = "Likes: \(post.likes)"
+        }
 
 }
 
