@@ -106,7 +106,6 @@ final class LogInViewController: UIViewController {
 
     @objc func logInButtonDidTapped() {
         let profileVC = ProfileViewController()
-        let profileHeader = ProfileHeaderView()
         guard let logInValue = contentView.emailOrPhoneTextField.text else { return }
         guard let password = contentView.passwordTextField.text else { return }
         if user.password == password &&
