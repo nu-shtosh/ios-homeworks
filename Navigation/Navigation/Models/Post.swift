@@ -15,10 +15,26 @@ struct Post {
     static func getDefaultPosts() -> [Post] {
         let user = User.getDefaultUser()
         let posts = [
-            Post(author: user, description: "многа букав", image: "a", likes: 0, views: 0),
-            Post(author: user, description: "еще больше букав", image: "b", likes: 0, views: 0),
-            Post(author: user, description: "мало букав", image: "c", likes: 0, views: 0),
-            Post(author: user, description: "три буквы", image: "d", likes: 0, views: 0)
+            Post(author: user,
+                 description: "\"Бьет - значит любит\", сказал пьяный электрик и снова полез в трансформаторную будку.",
+                 image: "cat1",
+                 likes: 14,
+                 views: 29),
+            Post(author: user,
+                 description: "Олег попал в жуткую аварию и чудом выжил. \"Чудес не бывает\", — подумал Олег и залез обратно в горящую машину.",
+                 image: "cat2",
+                 likes: 0,
+                 views: 1),
+            Post(author: user,
+                 description: "Штирлиц стрелял вслепую. Слепая бегала зигзагами и кричала",
+                 image: "cat3",
+                 likes: 875,
+                 views: 875),
+            Post(author: user,
+                 description: "Настя упала и разбила подбородок. Но ничего страшного, у нее есть второй!",
+                 image: "cat4",
+                 likes: 3,
+                 views: 3)
         ]
         return posts
     }

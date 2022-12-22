@@ -17,6 +17,20 @@ final class LogInView: UIView {
         return imageView
     }()
 
+
+    var loginStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        stackView.layer.borderColor = UIColor.lightGray.cgColor
+        stackView.layer.borderWidth = 0.5
+        stackView.layer.cornerRadius = 10
+        stackView.distribution = .fillProportionally
+        stackView.backgroundColor = .systemGray6
+        stackView.clipsToBounds = true
+        return stackView
+    }()
+
     lazy var emailOrPhoneTextField: UITextField = {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
@@ -26,8 +40,6 @@ final class LogInView: UIView {
         textField.backgroundColor = .systemGray6
         textField.layer.borderWidth = 0.5
         textField.layer.borderColor = UIColor.lightGray.cgColor
-        textField.layer.cornerRadius = 10
-        textField.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
         textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: textField.frame.height))
         textField.leftViewMode = .always
         setKeyboardSettings(forUITextField: textField)
@@ -43,8 +55,7 @@ final class LogInView: UIView {
         textField.backgroundColor = .systemGray6
         textField.layer.borderWidth = 0.5
         textField.layer.borderColor = UIColor.lightGray.cgColor
-        textField.layer.cornerRadius = 10
-        textField.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
+
         textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: textField.frame.height))
         textField.leftViewMode = .always
         textField.isSecureTextEntry = true
@@ -58,6 +69,7 @@ final class LogInView: UIView {
         buttonConfiguration.background.backgroundColor = VKColor
         buttonConfiguration.baseForegroundColor = VKColor
         var button = OutlineButton(configuration: buttonConfiguration, primaryAction: nil)
+        button.layer.cornerRadius = 10
         button.isSelected = true
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -67,10 +79,11 @@ final class LogInView: UIView {
         super.init(frame: frame)
         addSubviews(
             logoImageView,
-            emailOrPhoneTextField,
-            passwordTextField,
+            loginStackView,
             logInButton
         )
+        loginStackView.addArrangedSubview(emailOrPhoneTextField)
+        loginStackView.addArrangedSubview(passwordTextField)
         setConstraints()
     }
 
@@ -88,17 +101,12 @@ extension LogInView {
             logoImageView.heightAnchor.constraint(equalToConstant: 100),
             logoImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
 
-            emailOrPhoneTextField.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 120),
-            emailOrPhoneTextField.heightAnchor.constraint(equalToConstant: 50),
-            emailOrPhoneTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            emailOrPhoneTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            loginStackView.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 120),
+            loginStackView.heightAnchor.constraint(equalToConstant: 80),
+            loginStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            loginStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
 
-            passwordTextField.topAnchor.constraint(equalTo: emailOrPhoneTextField.bottomAnchor),
-            passwordTextField.heightAnchor.constraint(equalToConstant: 50),
-            passwordTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            passwordTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-
-            logInButton.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 16),
+            logInButton.topAnchor.constraint(equalTo: loginStackView.bottomAnchor, constant: 16),
             logInButton.heightAnchor.constraint(equalToConstant: 50),
             logInButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             logInButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
