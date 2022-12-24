@@ -9,7 +9,7 @@ import UIKit
 
 final class ProfileHeaderView: UITableViewHeaderFooterView {
 
-    static let identifier = "profileHeader"
+    static let identifier = "profileTVHFV"
 
     let user = User.getDefaultUser()
 
