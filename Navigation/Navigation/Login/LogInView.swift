@@ -9,15 +9,15 @@ import UIKit
 
 final class LogInView: UIView {
     private let VKColor = UIColor(named: "VKColor")
-
+    
     lazy var logoImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "VKLogo")
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
-
-
+    
+    
     var loginStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -30,7 +30,7 @@ final class LogInView: UIView {
         stackView.clipsToBounds = true
         return stackView
     }()
-
+    
     lazy var emailOrPhoneTextField: UITextField = {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
@@ -45,7 +45,7 @@ final class LogInView: UIView {
         setKeyboardSettings(forUITextField: textField)
         return textField
     }()
-
+    
     lazy var passwordTextField: UITextField = {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
@@ -55,14 +55,14 @@ final class LogInView: UIView {
         textField.backgroundColor = .systemGray6
         textField.layer.borderWidth = 0.5
         textField.layer.borderColor = UIColor.lightGray.cgColor
-
+        
         textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: textField.frame.height))
         textField.leftViewMode = .always
         textField.isSecureTextEntry = true
         setKeyboardSettings(forUITextField: textField)
         return textField
     }()
-
+    
     lazy var logInButton: UIButton = {
         var buttonConfiguration = UIButton.Configuration.outline()
         buttonConfiguration.title = "Log In"
@@ -74,7 +74,7 @@ final class LogInView: UIView {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     } ()
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubviews(
@@ -86,11 +86,11 @@ final class LogInView: UIView {
         loginStackView.addArrangedSubview(passwordTextField)
         setConstraints()
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
 }
 
 extension LogInView {
@@ -100,12 +100,12 @@ extension LogInView {
             logoImageView.widthAnchor.constraint(equalToConstant: 100),
             logoImageView.heightAnchor.constraint(equalToConstant: 100),
             logoImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
-
+            
             loginStackView.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 120),
             loginStackView.heightAnchor.constraint(equalToConstant: 80),
             loginStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             loginStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-
+            
             logInButton.topAnchor.constraint(equalTo: loginStackView.bottomAnchor, constant: 16),
             logInButton.heightAnchor.constraint(equalToConstant: 50),
             logInButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
@@ -125,11 +125,11 @@ extension LogInView: UITextFieldDelegate {
         let tapOnView = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         addGestureRecognizer(tapOnView)
     }
-
+    
     @objc func dismissKeyboard() {
         endEditing(true)
     }
-
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         dismissKeyboard()
         return true
