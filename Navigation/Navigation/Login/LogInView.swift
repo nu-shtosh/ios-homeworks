@@ -28,6 +28,7 @@ final class LogInView: UIView {
         stackView.distribution = .fillProportionally
         stackView.backgroundColor = .systemGray6
         stackView.clipsToBounds = true
+        stackView.spacing = 0
         return stackView
     }()
     
@@ -55,7 +56,7 @@ final class LogInView: UIView {
         textField.backgroundColor = .systemGray6
         textField.layer.borderWidth = 0.5
         textField.layer.borderColor = UIColor.lightGray.cgColor
-        
+    
         textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: textField.frame.height))
         textField.leftViewMode = .always
         textField.isSecureTextEntry = true
@@ -90,7 +91,6 @@ final class LogInView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
 }
 
 extension LogInView {
