@@ -14,8 +14,10 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
     let user = User.getDefaultUser()
 
     // MARK: - Private Properties
+    private var avatarIsFullScreen = false
     private var statusText: String?
     private var fullNameText: String?
+    private var profileAvatarStartPoint = CGPoint()
 
     lazy var profileAvatarImageView: UIImageView = {
         let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 132, height: 132))
@@ -27,8 +29,44 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
         imageView.layer.borderWidth = 3
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = UIImage(named: user.image)
+        imageGestureSettings(imageView: imageView)
         return imageView
     }()
+
+    private var avatarBackground: UIView = {
+        let view = UIView(
+            frame: CGRect(
+                x: 0,
+                y: 0,
+                width: UIScreen.main.bounds.width,
+                height: UIScreen.main.bounds.height
+            )
+        )
+        view.backgroundColor = .darkGray
+        view.isHidden = true
+        view.alpha = 0
+        return view
+    }()
+
+    private lazy var backButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.alpha = 0
+        button.backgroundColor = .clear
+        button.contentMode = .scaleToFill
+        button.setImage(
+            UIImage(
+                systemName: "xmark",
+                withConfiguration: UIImage.SymbolConfiguration(
+                    pointSize: 22
+                )
+            )?.withTintColor(.black, renderingMode: .automatic), for: .normal
+        )
+        button.tintColor = .black
+        button.addTarget(self, action: #selector(backButtonDidTapped), for: .touchUpInside)
+        return button
+    }()
+
 
     lazy var profileFullNameLabel: UILabel = {
         let label = UILabel()
@@ -88,11 +126,13 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
         contentView.layer.cornerRadius = 10
         contentView.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
         contentView.addSubviews(
-            profileAvatarImageView,
             profileFullNameLabel,
             profileStatusLabel,
             profileStatusTextField,
-            profileChangeStatusButton
+            profileChangeStatusButton,
+            avatarBackground,
+            profileAvatarImageView,
+            backButton
         )
         setConstraints()
     }
@@ -121,6 +161,51 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
     }
 }
 
+extension ProfileHeaderView {
+    private func imageGestureSettings(imageView: UIImageView) {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(avatarDidTapped))
+        tapGesture.numberOfTapsRequired = 1
+        tapGesture.numberOfTouchesRequired = 1
+        imageView.isUserInteractionEnabled = true
+        imageView.addGestureRecognizer(tapGesture)
+    }
+
+    @objc private func avatarDidTapped() {
+        avatarIsFullScreen.toggle()
+        profileAvatarImageView.isUserInteractionEnabled = false
+        profileAvatarStartPoint = profileAvatarImageView.center
+        let scale = UIScreen.main.bounds.width / profileAvatarImageView.bounds.width
+        UIView.animate(withDuration: 0.5) {
+
+            self.profileAvatarImageView.center = CGPoint(
+                x: UIScreen.main.bounds.midX,
+                y: UIScreen.main.bounds.midY - self.profileAvatarStartPoint.y
+            )
+            self.profileAvatarImageView.transform = CGAffineTransform(
+                scaleX: scale, y: scale
+            )
+            self.profileAvatarImageView.layer.cornerRadius = 0
+            self.avatarBackground.isHidden = false
+            self.avatarBackground.alpha = 0.9
+        } completion: { _ in
+            UIView.animate(withDuration: 0.5) {
+                self.backButton.alpha = 1
+            }
+        }
+    }
+
+    @objc private func backButtonDidTapped() {
+        avatarIsFullScreen.toggle()
+        UIImageView.animate(withDuration: 0.3) {
+            self.backButton.alpha = 0
+            self.profileAvatarImageView.center = self.profileAvatarStartPoint
+            self.profileAvatarImageView.transform = CGAffineTransform(scaleX: 1, y: 1)
+            self.profileAvatarImageView.layer.cornerRadius = self.profileAvatarImageView.frame.width / 2
+            self.avatarBackground.alpha = 0
+        }
+    }
+}
+
 // MARK: - Setup Settings
 extension ProfileHeaderView {
     private func setConstraints() {
@@ -146,7 +231,10 @@ extension ProfileHeaderView {
             profileChangeStatusButton.topAnchor.constraint(equalTo: profileAvatarImageView.bottomAnchor, constant: 16),
             profileChangeStatusButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             profileChangeStatusButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            profileChangeStatusButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16)
+            profileChangeStatusButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
+
+            backButton.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16),
+            backButton.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
         ])
     }
 }
