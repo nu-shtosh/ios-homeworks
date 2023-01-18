@@ -20,9 +20,9 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
     private var profileAvatarStartPoint = CGPoint()
 
     lazy var profileAvatarImageView: UIImageView = {
-        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 132, height: 132))
+        let imageView = UIImageView()
         imageView.layer.masksToBounds = true
-        imageView.layer.cornerRadius = imageView.frame.width / 2
+        imageView.layer.cornerRadius = 66
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
         imageView.layer.borderColor = UIColor.white.cgColor
@@ -102,7 +102,7 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
     }()
 
     private lazy var profileStatusTextField: UITextField = {
-        let textField = UITextField(frame: CGRect(x: 0, y: 0, width: 0, height: 40))
+        let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.font = .systemFont(ofSize: 15, weight: .regular)
         textField.layer.masksToBounds = true
