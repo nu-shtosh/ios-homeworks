@@ -142,10 +142,15 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
     }
 
     @objc private func profileChangeStatusButtonTapped() {
-        print("New profile status \(statusText ?? "")")
-        profileStatusLabel.text = statusText ?? ""
-        profileStatusTextField.text = .none
-        profileStatusTextField.resignFirstResponder()
+        print("New profile status: \(statusText ?? "")")
+        if statusText != nil   {
+            profileStatusLabel.text = statusText ?? ""
+            profileStatusTextField.text = .none
+            profileStatusTextField.resignFirstResponder()
+        } else {
+            showAlert(withTitle: "Oops!", andMessage:  "Status must be not empty")
+            profileStatusTextField.shake()
+        }
     }
 
     @objc private func profileStatusTextChanged(_ textField: UITextField) {

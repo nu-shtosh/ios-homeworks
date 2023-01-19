@@ -10,15 +10,17 @@ import UIKit
 class PostTableViewCell: UITableViewCell {
     
     static let identifier = "postTVC"
-    
+
+    private var post: Post!
+    private var addLikeButtonDidClick: (() -> Void)!
+
     lazy var postAuthor: UILabel = {
-        let author = UILabel()
-        author.text = ""
-        author.font = UIFont.boldSystemFont(ofSize: 20)
-        author.textColor = .black
-        author.numberOfLines = 2
-        author.translatesAutoresizingMaskIntoConstraints = false
-        return author
+        let label = UILabel()
+        label.font = UIFont.boldSystemFont(ofSize: 20)
+        label.textColor = .black
+        label.numberOfLines = 2
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
     }()
     
     lazy var postImageView: UIImageView = {
@@ -32,33 +34,40 @@ class PostTableViewCell: UITableViewCell {
     }()
     
     lazy var descriptionText: UILabel = {
-        let descriptionText = UILabel()
-        descriptionText.text = ""
-        descriptionText.textColor = .systemGray
-        descriptionText.font = UIFont.systemFont(ofSize: 14)
-        descriptionText.numberOfLines = 0
-        descriptionText.translatesAutoresizingMaskIntoConstraints = false
-        return descriptionText
+        let label = UILabel()
+        label.textColor = .systemGray
+        label.font = UIFont.systemFont(ofSize: 14)
+        label.numberOfLines = 0
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
     }()
     
     lazy var likes: UILabel = {
-        let likes = UILabel()
-        likes.textColor = .black
-        likes.font = UIFont.systemFont(ofSize: 16)
-        likes.text = ""
-        likes.numberOfLines = 0
-        likes.translatesAutoresizingMaskIntoConstraints = false
-        return likes
+        let label = UILabel()
+        label.textColor = .black
+        label.clipsToBounds = true
+        label.layer.masksToBounds = true
+        label.font = UIFont.systemFont(ofSize: 16)
+        label.numberOfLines = 0
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.isUserInteractionEnabled = true
+
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(addLike))
+        tapGesture.numberOfTapsRequired = 1
+        tapGesture.numberOfTouchesRequired = 1
+        label.addGestureRecognizer(tapGesture)
+        return label
     }()
     
     lazy var views: UILabel = {
-        let views = UILabel()
-        views.textColor = .black
-        views.text = ""
-        views.font = UIFont.systemFont(ofSize: 16)
-        views.numberOfLines = 0
-        views.translatesAutoresizingMaskIntoConstraints = false
-        return views
+        let label = UILabel()
+        label.clipsToBounds = true
+        label.layer.masksToBounds = true
+        label.textColor = .black
+        label.font = UIFont.systemFont(ofSize: 16)
+        label.numberOfLines = 0
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
     }()
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -67,14 +76,21 @@ class PostTableViewCell: UITableViewCell {
         setConstraints()
     }
     
-    func setupCell(with post: Post) {
-        postAuthor.text = post.author.fullName
-        postImageView.image = UIImage(named: post.image)
-        descriptionText.text = post.description
-        likes.text = "Views: \(post.views)"
-        views.text = "Likes: \(post.likes)"
+    func setupCell(with post: Post, addLikeButtonDidClick: @escaping () -> Void) {
+        self.post = post
+        self.addLikeButtonDidClick = addLikeButtonDidClick
+
+        self.postAuthor.text = post.author.fullName
+        self.postImageView.image = UIImage(named: post.image)
+        self.descriptionText.text = post.description
+        self.likes.text = "Likes: \(post.likes)"
+        self.views.text = "Views: \(post.views)"
     }
-    
+
+    @objc func addLike() {
+        self.post.likes += 1
+        self.likes.text = "Likes: \(post.likes)"
+    }
 }
 
 extension PostTableViewCell {

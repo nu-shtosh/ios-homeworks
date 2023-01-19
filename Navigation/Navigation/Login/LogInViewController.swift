@@ -185,24 +185,26 @@ final class LogInViewController: UIViewController {
         let profileVC = ProfileViewController()
         guard let logInValue = emailOrPhoneTextField.text else { return }
         guard let password = passwordTextField.text else { return }
-        if user.password == password &&
-            (user.email == logInValue || user.phone == logInValue) && isValidEmail(logInValue){
-            alertLabel.isHidden = true
-            emailOrPhoneTextField.text = ""
-            passwordTextField.text = ""
-            navigationController?.pushViewController(profileVC, animated: true)
-        } else if logInValue.count == 0 {
-            showAlertText(withText: "Email/Phone must be not empty!")
-            shakeTextField(emailOrPhoneTextField)
-        } else if password.count == 0 {
-            showAlertText(withText: "Password must be not empty!")
-            shakeTextField(passwordTextField)
-        } else {
-            showAlertText(withText: "Wrong Email/Phone or Password")
-            shakeTextField(emailOrPhoneTextField)
-            shakeTextField(passwordTextField)
-            showAlert(withTitle: "Ops!", andMessage: "Wrong Email/Phone or Password \n email: foobar@gmail.com \n password: password", textField: passwordTextField)
-        }
+        navigationController?.pushViewController(profileVC, animated: true)
+
+//        if user.password == password &&
+//            (user.email == logInValue || user.phone == logInValue) && isValidEmail(logInValue){
+//            alertLabel.isHidden = true
+//            emailOrPhoneTextField.text = ""
+//            passwordTextField.text = ""
+//            navigationController?.pushViewController(profileVC, animated: true)
+//        } else if logInValue.count == 0 {
+//            showAlertText(withText: "Email/Phone must be not empty!")
+//            shakeTextField(emailOrPhoneTextField)
+//        } else if password.count == 0 {
+//            showAlertText(withText: "Password must be not empty!")
+//            shakeTextField(passwordTextField)
+//        } else {
+//            showAlertText(withText: "Wrong Email/Phone or Password")
+//            shakeTextField(emailOrPhoneTextField)
+//            shakeTextField(passwordTextField)
+//            showAlert(withTitle: "Ops!", andMessage: "Wrong Email/Phone or Password \n email: foobar@gmail.com \n password: password", textField: passwordTextField)
+//        }
     }
 
     private func shakeTextField(_ textField: UITextField) {
