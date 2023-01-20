@@ -118,6 +118,4 @@ extension PostTableViewCell {
             views.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16),
         ])
     }
-    
-    
 }

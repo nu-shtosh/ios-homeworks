@@ -89,7 +89,12 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
             tableView.deselectRow(at: indexPath, animated: false)
             navigationController?.pushViewController(PhotosViewController(), animated: true)
         default:
+            let postDetailVC = PostDetailViewController()
+            var post = posts[indexPath.row]
+            post.views += 1
+            postDetailVC.post = post
             tableView.deselectRow(at: indexPath, animated: true)
+            navigationController?.pushViewController(postDetailVC, animated: true)
         }
     }
 

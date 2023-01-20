@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B84C2646297ACB42006E7A41 /* PostDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B84C2645297ACB42006E7A41 /* PostDetailViewController.swift */; };
 		B85ADD17294C9A3F0084E2C4 /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85ADD16294C9A3F0084E2C4 /* PostTableViewCell.swift */; };
 		B85E0BFE292C2ACB00E4BFA2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E0BFD292C2ACB00E4BFA2 /* AppDelegate.swift */; };
 		B85E0C00292C2ACB00E4BFA2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85E0BFF292C2ACB00E4BFA2 /* SceneDelegate.swift */; };
@@ -30,6 +31,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B84C2645297ACB42006E7A41 /* PostDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailViewController.swift; sourceTree = "<group>"; };
 		B85ADD16294C9A3F0084E2C4 /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 		B85E0BFA292C2ACB00E4BFA2 /* Navigation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Navigation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B85E0BFD292C2ACB00E4BFA2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -139,6 +141,7 @@
 			isa = PBXGroup;
 			children = (
 				B85ADD16294C9A3F0084E2C4 /* PostTableViewCell.swift */,
+				B84C2645297ACB42006E7A41 /* PostDetailViewController.swift */,
 			);
 			path = Post;
 			sourceTree = "<group>";
@@ -257,6 +260,7 @@
 				B85ADD17294C9A3F0084E2C4 /* PostTableViewCell.swift in Sources */,
 				B892FEDD29571D9200BF9E0B /* DataStorage.swift in Sources */,
 				B8B37AC4293F91D700611844 /* LogInViewController.swift in Sources */,
+				B84C2646297ACB42006E7A41 /* PostDetailViewController.swift in Sources */,
 				B892FEDB29571D4000BF9E0B /* PhotoCollectionViewCell.swift in Sources */,
 				B8B37AF72941E18000611844 /* Extension + UIColor.swift in Sources */,
 				B8B37ACE2940851200611844 /* Extension + UIVIew.swift in Sources */,
