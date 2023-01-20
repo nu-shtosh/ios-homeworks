@@ -10,7 +10,7 @@ import UIKit
 
 class ProfileViewController: UIViewController {
 
-    private let posts = Post.getDefaultPosts()
+    private var posts = Post.getDefaultPosts()
 
     private lazy var postTableView: UITableView = {
         let tableView = UITableView(frame: view.frame, style: .grouped)
@@ -80,6 +80,15 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         case 0: return 1
         default: return posts.count
         }
+    }
+
+    func tableView(_ tableView: UITableView,
+                   leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { _, _, _ in
+            self.posts.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        }
+        return UISwipeActionsConfiguration(actions: [deleteAction])
     }
 
     func tableView(_ tableView: UITableView,
