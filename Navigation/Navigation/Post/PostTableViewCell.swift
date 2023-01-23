@@ -10,10 +10,10 @@ import UIKit
 class PostTableViewCell: UITableViewCell {
     
     static let identifier = "postTVC"
-
+    
     private var post: Post!
     private var addLikeButtonDidClick: (() -> Void)!
-
+    
     lazy var postAuthor: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 20)
@@ -51,8 +51,11 @@ class PostTableViewCell: UITableViewCell {
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         label.isUserInteractionEnabled = true
-
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(addLike))
+        
+        let tapGesture = UITapGestureRecognizer(
+            target: self,
+            action: #selector(addLike)
+        )
         tapGesture.numberOfTapsRequired = 1
         tapGesture.numberOfTouchesRequired = 1
         label.addGestureRecognizer(tapGesture)
@@ -79,14 +82,14 @@ class PostTableViewCell: UITableViewCell {
     func setupCell(with post: Post, addLikeButtonDidClick: @escaping () -> Void) {
         self.post = post
         self.addLikeButtonDidClick = addLikeButtonDidClick
-
+        
         self.postAuthor.text = post.author.fullName
         self.postImageView.image = UIImage(named: post.image)
         self.descriptionText.text = post.description
         self.likes.text = "Likes: \(post.likes)"
         self.views.text = "Views: \(post.views)"
     }
-
+    
     @objc func addLike() {
         self.post.likes += 1
         self.likes.text = "Likes: \(post.likes)"

@@ -8,17 +8,18 @@
 import UIKit
 
 final class ProfileHeaderView: UITableViewHeaderFooterView {
-
+    
     static let identifier = "profileTVHFV"
-
+    
     let user = User.getDefaultUser()
-
+    
     // MARK: - Private Properties
-    private var avatarIsFullScreen = false
+    
     private var statusText: String?
     private var fullNameText: String?
+    
     private var profileAvatarStartPoint = CGPoint()
-
+    
     lazy var profileAvatarImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.masksToBounds = true
@@ -32,7 +33,7 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
         imageGestureSettings(imageView: imageView)
         return imageView
     }()
-
+    
     private var avatarBackground: UIView = {
         let view = UIView(
             frame: CGRect(
@@ -47,7 +48,7 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
         view.alpha = 0
         return view
     }()
-
+    
     private lazy var backButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -63,11 +64,15 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
             )?.withTintColor(.black, renderingMode: .automatic), for: .normal
         )
         button.tintColor = .black
-        button.addTarget(self, action: #selector(backButtonDidTapped), for: .touchUpInside)
+        button.addTarget(
+            self,
+            action: #selector(backButtonDidTapped),
+            for: .touchUpInside
+        )
         return button
     }()
-
-
+    
+    
     lazy var profileFullNameLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -76,7 +81,7 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
         label.textColor = .black
         return label
     }()
-
+    
     lazy var profileStatusLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -97,10 +102,14 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
         button.layer.shadowRadius = 4
         button.layer.shadowColor = UIColor.black.cgColor
         button.layer.shadowOpacity = 0.7
-        button.addTarget(self, action: #selector(profileChangeStatusButtonTapped), for: .touchUpInside)
+        button.addTarget(
+            self,
+            action: #selector(profileChangeStatusButtonTapped),
+            for: .touchUpInside
+        )
         return button
     }()
-
+    
     private lazy var profileStatusTextField: UITextField = {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
@@ -111,14 +120,20 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
         textField.layer.cornerRadius = 12
         textField.layer.borderColor = UIColor.black.cgColor
         textField.layer.borderWidth = 1
-        textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: textField.frame.height))
+        textField.leftView = UIView(
+            frame: CGRect(x: 0, y: 0, width: 10, height: textField.frame.height)
+        )
         textField.leftViewMode = .always
         setKeyboardSettings(forUITextField: textField)
-        textField.addTarget(self, action: #selector(profileStatusTextChanged), for: .editingChanged)
+        textField.addTarget(
+            self,
+            action: #selector(profileStatusTextChanged),
+            for: .editingChanged
+        )
         return textField
     }()
-
-
+    
+    
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
         contentView.backgroundColor = .systemGray3
@@ -136,11 +151,11 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
         )
         setConstraints()
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     @objc private func profileChangeStatusButtonTapped() {
         print("New profile status: \(statusText ?? "")")
         if statusText != nil   {
@@ -152,7 +167,7 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
             profileStatusTextField.shake()
         }
     }
-
+    
     @objc private func profileStatusTextChanged(_ textField: UITextField) {
         guard let status = textField.text, status.count <= 90 else {
             while textField.text?.count != 89 {
@@ -168,20 +183,22 @@ final class ProfileHeaderView: UITableViewHeaderFooterView {
 
 extension ProfileHeaderView {
     private func imageGestureSettings(imageView: UIImageView) {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(avatarDidTapped))
+        let tapGesture = UITapGestureRecognizer(
+            target: self,
+            action: #selector(avatarDidTapped)
+        )
         tapGesture.numberOfTapsRequired = 1
         tapGesture.numberOfTouchesRequired = 1
         imageView.isUserInteractionEnabled = true
         imageView.addGestureRecognizer(tapGesture)
     }
-
+    
     @objc private func avatarDidTapped() {
-        avatarIsFullScreen.toggle()
         profileAvatarImageView.isUserInteractionEnabled = false
         profileAvatarStartPoint = profileAvatarImageView.center
         let scale = UIScreen.main.bounds.width / profileAvatarImageView.bounds.width
         UIView.animate(withDuration: 0.5) {
-
+            
             self.profileAvatarImageView.center = CGPoint(
                 x: UIScreen.main.bounds.midX,
                 y: UIScreen.main.bounds.midY - self.profileAvatarStartPoint.y
@@ -198,9 +215,8 @@ extension ProfileHeaderView {
             }
         }
     }
-
+    
     @objc private func backButtonDidTapped() {
-        avatarIsFullScreen.toggle()
         UIImageView.animate(withDuration: 0.3) {
             self.backButton.alpha = 0
             self.profileAvatarImageView.center = self.profileAvatarStartPoint
@@ -219,25 +235,25 @@ extension ProfileHeaderView {
             profileAvatarImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             profileAvatarImageView.widthAnchor.constraint(equalToConstant: 132),
             profileAvatarImageView.heightAnchor.constraint(equalToConstant: 132),
-
+            
             profileFullNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 27),
             profileFullNameLabel.leadingAnchor.constraint(equalTo: profileAvatarImageView.trailingAnchor, constant: 16),
             profileFullNameLabel.trailingAnchor.constraint(equalTo:  contentView.trailingAnchor, constant: -16),
-
+            
             profileStatusLabel.bottomAnchor.constraint(equalTo: profileChangeStatusButton.topAnchor, constant: -54),
             profileStatusLabel.leadingAnchor.constraint(equalTo: profileAvatarImageView.trailingAnchor, constant: 16),
             profileStatusLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-
+            
             profileStatusTextField.topAnchor.constraint(equalTo: profileStatusLabel.bottomAnchor, constant: 10),
             profileStatusTextField.bottomAnchor.constraint(equalTo: profileChangeStatusButton.topAnchor, constant: -10),
             profileStatusTextField.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             profileStatusTextField.leadingAnchor.constraint(equalTo: profileAvatarImageView.trailingAnchor, constant: 16),
-
+            
             profileChangeStatusButton.topAnchor.constraint(equalTo: profileAvatarImageView.bottomAnchor, constant: 16),
             profileChangeStatusButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             profileChangeStatusButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             profileChangeStatusButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
-
+            
             backButton.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16),
             backButton.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
         ])
@@ -256,11 +272,11 @@ extension ProfileHeaderView: UITextFieldDelegate {
         let tapOnView = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         addGestureRecognizer(tapOnView)
     }
-
+    
     @objc func dismissKeyboard() {
         endEditing(true)
     }
-
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         dismissKeyboard()
         return true
@@ -276,11 +292,11 @@ extension ProfileHeaderView {
             message: message,
             preferredStyle: .alert
         )
-
+        
         let okAction = UIAlertAction(title: "Ok", style: .default) { _ in
             print("This is Ok Action")
         }
-
+        
         alert.addAction(okAction)
         rootVC.present(alert, animated: true)
     }

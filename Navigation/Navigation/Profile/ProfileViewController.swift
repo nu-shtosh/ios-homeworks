@@ -9,9 +9,9 @@
 import UIKit
 
 class ProfileViewController: UIViewController {
-
+    
     private var posts = Post.getDefaultPosts()
-
+    
     private lazy var postTableView: UITableView = {
         let tableView = UITableView(frame: view.frame, style: .grouped)
         tableView.backgroundColor = .systemGray3
@@ -22,9 +22,9 @@ class ProfileViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         return tableView
-
+        
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemGray3
@@ -32,7 +32,7 @@ class ProfileViewController: UIViewController {
         postTableView.reloadData()
         setConstraints()
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         setupNavigationBar()
         postTableView.reloadData()
@@ -48,12 +48,14 @@ extension ProfileViewController {
             postTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
-
+    
     func setupNavigationBar() {
         title = "Profile"
         let navBarAppearance = UINavigationBarAppearance()
         navBarAppearance.backgroundColor = .systemGray3
-        navBarAppearance.titleTextAttributes = [.foregroundColor: UIColor(named: "VKColor") ?? UIColor.systemCyan]
+        navBarAppearance.titleTextAttributes = [
+            .foregroundColor: UIColor(named: "VKColor") ?? UIColor.systemCyan
+        ]
         navigationItem.hidesBackButton = true
         navigationController?.navigationBar.isHidden = true
         navigationController?.navigationBar.standardAppearance = navBarAppearance
@@ -66,14 +68,16 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
-
+    
     func tableView(_ tableView: UITableView,
                    viewForHeaderInSection section: Int) -> UIView? {
         guard section == 0 else { return nil }
-        let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ProfileHeaderView.identifier)
+        let headerView = tableView.dequeueReusableHeaderFooterView(
+            withIdentifier: ProfileHeaderView.identifier
+        )
         return headerView
     }
-
+    
     func tableView(_ tableView: UITableView,
                    numberOfRowsInSection section: Int) -> Int {
         switch section {
@@ -81,7 +85,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         default: return posts.count
         }
     }
-
+    
     func tableView(_ tableView: UITableView,
                    leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { _, _, _ in
@@ -90,7 +94,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         }
         return UISwipeActionsConfiguration(actions: [deleteAction])
     }
-
+    
     func tableView(_ tableView: UITableView,
                    didSelectRowAt indexPath: IndexPath) {
         switch indexPath.section {
@@ -106,7 +110,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
             navigationController?.pushViewController(postDetailVC, animated: true)
         }
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
         case 0:

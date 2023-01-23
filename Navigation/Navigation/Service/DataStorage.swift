@@ -9,9 +9,9 @@ import Foundation
 
 class DataStorage {
     static let shared = DataStorage()
-
+    
     private init () {}
-
+    
     let photos = [
         "cat1",
         "cat2",
