@@ -10,10 +10,9 @@ import UIKit
 class PostTableViewCell: UITableViewCell {
     
     static let identifier = "postTVC"
-    
-    private var post: Post!
-    private var addLikeButtonDidClick: (() -> Void)!
-    
+
+    private var index = 0
+
     lazy var postAuthor: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 20)
@@ -79,20 +78,19 @@ class PostTableViewCell: UITableViewCell {
         setConstraints()
     }
     
-    func setupCell(with post: Post, addLikeButtonDidClick: @escaping () -> Void) {
-        self.post = post
-        self.addLikeButtonDidClick = addLikeButtonDidClick
-        
-        self.postAuthor.text = post.author.fullName
-        self.postImageView.image = UIImage(named: post.image)
-        self.descriptionText.text = post.description
-        self.likes.text = "Likes: \(post.likes)"
-        self.views.text = "Views: \(post.views)"
+    func setupCell(with index: Int) {
+        self.index = index
+
+        postAuthor.text = Posts.shared.posts[index].author.fullName
+        postImageView.image = UIImage(named: Posts.shared.posts[index].image)
+        descriptionText.text = Posts.shared.posts[index].description
+        likes.text = "Likes: \(Posts.shared.posts[index].likes)"
+        views.text = "Views: \(Posts.shared.posts[index].views)"
     }
     
     @objc func addLike() {
-        self.post.likes += 1
-        self.likes.text = "Likes: \(post.likes)"
+        Posts.shared.posts[index].likes += 1
+        likes.text = "Likes: \(Posts.shared.posts[index].likes)"
     }
 }
 
@@ -113,6 +111,7 @@ extension PostTableViewCell {
             postImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             
             likes.topAnchor.constraint(equalTo: postImageView.bottomAnchor, constant: 16),
+            likes.widthAnchor.constraint(equalToConstant: 150),
             likes.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             likes.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16),
             

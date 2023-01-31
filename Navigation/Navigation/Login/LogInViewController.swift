@@ -11,6 +11,7 @@ import UIKit
 final class LogInViewController: UIViewController {
     
     let user = User.getDefaultUser()
+    
     private let VKColor = UIColor(named: "VKColor")
     
     private lazy var scrollView: UIScrollView = {
@@ -211,8 +212,8 @@ final class LogInViewController: UIViewController {
         let profileVC = ProfileViewController()
         guard let logInValue = emailOrPhoneTextField.text else { return }
         guard let password = passwordTextField.text else { return }
-        
-        navigationController?.pushViewController(profileVC, animated: true)
+
+//        navigationController?.pushViewController(profileVC, animated: true)
         
         if user.password == password &&
             (user.email == logInValue || user.phone == logInValue) &&

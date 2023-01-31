@@ -10,8 +10,6 @@ import UIKit
 
 class ProfileViewController: UIViewController {
     
-    private var posts = Post.getDefaultPosts()
-    
     private lazy var postTableView: UITableView = {
         let tableView = UITableView(frame: view.frame, style: .grouped)
         tableView.backgroundColor = .systemGray3
@@ -29,12 +27,16 @@ class ProfileViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemGray3
         view.addSubview(postTableView)
-        postTableView.reloadData()
         setConstraints()
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         setupNavigationBar()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         postTableView.reloadData()
     }
 }
@@ -82,19 +84,20 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
                    numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0: return 1
-        default: return posts.count
+        default: return Posts.shared.posts.count
         }
     }
     
     func tableView(_ tableView: UITableView,
                    leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { _, _, _ in
-            self.posts.remove(at: indexPath.row)
+            Posts.shared.posts.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
         return UISwipeActionsConfiguration(actions: [deleteAction])
     }
-    
+
+
     func tableView(_ tableView: UITableView,
                    didSelectRowAt indexPath: IndexPath) {
         switch indexPath.section {
@@ -102,16 +105,16 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
             tableView.deselectRow(at: indexPath, animated: false)
             navigationController?.pushViewController(PhotosViewController(), animated: true)
         default:
-            let postDetailVC = PostDetailViewController()
-            var post = posts[indexPath.row]
-            post.views += 1
-            postDetailVC.post = post
             tableView.deselectRow(at: indexPath, animated: true)
+            let postDetailVC = PostDetailViewController()
+            Posts.shared.posts[indexPath.row].views += 1
+            postDetailVC.post = Posts.shared.posts[indexPath.row]
             navigationController?.pushViewController(postDetailVC, animated: true)
         }
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView,
+                   cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.section {
         case 0:
             let cell = tableView.dequeueReusableCell(
@@ -123,10 +126,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(
                 withIdentifier: PostTableViewCell.identifier
             ) as! PostTableViewCell
-            let post = posts[indexPath.row]
-            cell.setupCell(with: post) {
-                self.postTableView.reloadData()
-            }
+            cell.setupCell(with: indexPath.row)
             return cell
         }
     }
