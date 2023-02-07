@@ -10,15 +10,16 @@ import UIKit
 class PostTableViewCell: UITableViewCell {
     
     static let identifier = "postTVC"
-    
+
+    private var index = 0
+
     lazy var postAuthor: UILabel = {
-        let author = UILabel()
-        author.text = ""
-        author.font = UIFont.boldSystemFont(ofSize: 20)
-        author.textColor = .black
-        author.numberOfLines = 2
-        author.translatesAutoresizingMaskIntoConstraints = false
-        return author
+        let label = UILabel()
+        label.font = UIFont.boldSystemFont(ofSize: 20)
+        label.textColor = .black
+        label.numberOfLines = 2
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
     }()
     
     lazy var postImageView: UIImageView = {
@@ -32,33 +33,43 @@ class PostTableViewCell: UITableViewCell {
     }()
     
     lazy var descriptionText: UILabel = {
-        let descriptionText = UILabel()
-        descriptionText.text = ""
-        descriptionText.textColor = .systemGray
-        descriptionText.font = UIFont.systemFont(ofSize: 14)
-        descriptionText.numberOfLines = 0
-        descriptionText.translatesAutoresizingMaskIntoConstraints = false
-        return descriptionText
+        let label = UILabel()
+        label.textColor = .systemGray
+        label.font = UIFont.systemFont(ofSize: 14)
+        label.numberOfLines = 0
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
     }()
     
     lazy var likes: UILabel = {
-        let likes = UILabel()
-        likes.textColor = .black
-        likes.font = UIFont.systemFont(ofSize: 16)
-        likes.text = ""
-        likes.numberOfLines = 0
-        likes.translatesAutoresizingMaskIntoConstraints = false
-        return likes
+        let label = UILabel()
+        label.textColor = .black
+        label.clipsToBounds = true
+        label.layer.masksToBounds = true
+        label.font = UIFont.systemFont(ofSize: 16)
+        label.numberOfLines = 0
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.isUserInteractionEnabled = true
+        
+        let tapGesture = UITapGestureRecognizer(
+            target: self,
+            action: #selector(addLike)
+        )
+        tapGesture.numberOfTapsRequired = 1
+        tapGesture.numberOfTouchesRequired = 1
+        label.addGestureRecognizer(tapGesture)
+        return label
     }()
     
     lazy var views: UILabel = {
-        let views = UILabel()
-        views.textColor = .black
-        views.text = ""
-        views.font = UIFont.systemFont(ofSize: 16)
-        views.numberOfLines = 0
-        views.translatesAutoresizingMaskIntoConstraints = false
-        return views
+        let label = UILabel()
+        label.clipsToBounds = true
+        label.layer.masksToBounds = true
+        label.textColor = .black
+        label.font = UIFont.systemFont(ofSize: 16)
+        label.numberOfLines = 0
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
     }()
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -67,14 +78,20 @@ class PostTableViewCell: UITableViewCell {
         setConstraints()
     }
     
-    func setupCell(with post: Post) {
-        postAuthor.text = post.author.fullName
-        postImageView.image = UIImage(named: post.image)
-        descriptionText.text = post.description
-        likes.text = "Views: \(post.views)"
-        views.text = "Likes: \(post.likes)"
+    func setupCell(with index: Int) {
+        self.index = index
+
+        postAuthor.text = Posts.shared.posts[index].author.fullName
+        postImageView.image = UIImage(named: Posts.shared.posts[index].image)
+        descriptionText.text = Posts.shared.posts[index].description
+        likes.text = "Likes: \(Posts.shared.posts[index].likes)"
+        views.text = "Views: \(Posts.shared.posts[index].views)"
     }
     
+    @objc func addLike() {
+        Posts.shared.posts[index].likes += 1
+        likes.text = "Likes: \(Posts.shared.posts[index].likes)"
+    }
 }
 
 extension PostTableViewCell {
@@ -94,6 +111,7 @@ extension PostTableViewCell {
             postImageView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             
             likes.topAnchor.constraint(equalTo: postImageView.bottomAnchor, constant: 16),
+            likes.widthAnchor.constraint(equalToConstant: 150),
             likes.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             likes.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16),
             
@@ -102,6 +120,4 @@ extension PostTableViewCell {
             views.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16),
         ])
     }
-    
-    
 }
